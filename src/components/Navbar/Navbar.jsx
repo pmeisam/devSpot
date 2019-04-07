@@ -5,38 +5,48 @@ import { Link } from "react-router-dom";
 function Navbar(props) {
   return (
     <>
-    <nav>
-      <div className="nav-wrapper">
-        <Link to="/" className="brand-logo">
-          <i className="material-icons">code</i>devSpot
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <Link to="/" className="navbar-brand">
+          devSpot
         </Link>
-        <ul className="right hide-on-med-and-down">
-          <li>
-            <Link to="">
-              <i className="material-icons">search</i>
-            </Link>
-          </li>
-          <li>
-            <Link to={`/${props.user.user_name}`}>
-              <i className="material-icons">view_module</i>
-            </Link>
-          </li>
-          <li>
-            <Link to="/create-post">
-              <i className="material-icons">file_upload</i>
-            </Link>
-          </li>
-          <li>
-            <Link to="" onClick={props.handleLogout}>
-              <i className="material-icons">keyboard_backspace</i>
-            </Link>
-          </li>
-        </ul>
-      </div>
-      {/* <p>Hello {props.user.first_name}</p> */}
-    </nav>
-  </>
- );
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon" />
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <Link className="nav-link" to="">
+                Search
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to={`/${props.user.user_name}`}>
+                profile
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/create-post">
+                create dev
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="" onClick={props.handleLogout}>
+                sign out
+              </Link>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </>
+  );
 }
 // class FloatingMenuItem extends Component {
 //   handleClick() {
@@ -113,7 +123,5 @@ function Navbar(props) {
 //     );
 //   }
 // }
-
-
 
 export default Navbar;

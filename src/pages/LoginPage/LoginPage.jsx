@@ -32,44 +32,39 @@ class LoginPage extends Component {
 
   render() {
     return (
-      <div>
-        <div className="row">
-          <div className="col s12">
-            <div className="card blue-grey darken-1">
-              <div className="card-content white-text">
-                <h1 className="card-title">devSpot</h1>
-                <header className="header-footer">Log In</header>
-                <form onSubmit={this.handleSubmit}>
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    autoComplete="off"
-                    name="email"
-                    value={this.state.email}
-                    onChange={this.handleChange}
-                  />
-                  <input
-                    type="password"
-                    placeholder="Password"
-                    autoComplete="off"
-                    name="pw"
-                    value={this.state.pw}
-                    onChange={this.handleChange}
-                  />
-                  <button className="btn waves-effect waves-light #e65100 orange darken-4">
-                    Log In
-                  </button>
-                  &nbsp;&nbsp;&nbsp;
-                  <Link to="/">Cancel</Link>
-                </form>
-              </div>
-              <div className="card-action">
-                <Link to="/">back</Link>
-                <Link to="">This is a link</Link>
-              </div>
-            </div>
+      <div className="container">
+        <form onSubmit={this.handleSubmit}>
+          <div className="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input
+              className="form-control"
+              type="email"
+              placeholder="Email"
+              autoComplete="off"
+              name="email"
+              value={this.state.email}
+              onChange={this.handleChange}
+            />
+            <small id="emailHelp" className="form-text text-muted">
+              We'll never share your email with anyone else.
+            </small>
           </div>
-        </div>
+          <div className="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input
+              type="password"
+              className="form-control"
+              placeholder="Password"
+              autoComplete="off"
+              name="pw"
+              value={this.state.pw}
+              onChange={this.handleChange}
+            />
+          </div>
+          <button className="btn btn-primary">Log In</button>
+          &nbsp;&nbsp;&nbsp;
+          <Link to="/">Cancel</Link>
+        </form>
       </div>
     );
   }

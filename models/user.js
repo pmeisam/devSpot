@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 const bcrypt = require("bcrypt");
 
 const SALT_ROUNDS = 6;
@@ -11,6 +12,12 @@ const userSchema = new mongoose.Schema(
     email: { type: String, required: true, lowercase: true, unique: true },
     password: String,
     avatar: String,
+    projects: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Project"
+      }
+    ],
     bio: String,
     notifications: [String],
     followers: [String],

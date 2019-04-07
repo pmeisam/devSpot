@@ -1,36 +1,32 @@
 import React, { Component } from "react";
-import "./ProfilePage.css"
+import postService from "../../utils/postService";
+import "./ProfilePage.css";
 
 class ProfilePage extends Component {
+  async componentDidMount() {
+    const projects = await postService.userIndex();
+    this.props.handleUpdateUserProjects(projects);
+  }
   render() {
     return (
       <>
-        <div>
-          <h3>Hello {this.props.user.first_name}</h3>
-          <div>
-            {this.props.userIndex ? (
-              this.props.userIndex.map((p, i) => (
-                <div key={`p${i}`} className="card-panel blue-grey darken-1 white-text">
-                  <iframe key={`frame${i}`} title={`title${i}`} src={p.url} />
-                  <div key={p.caption}>{p.caption}</div>
-                  <div key={`{comments${i}`}>{p.comments}</div>
-                  <div key={`likes${i}`}>{p.likes}</div>
-                  <button key={`p.btn${i}`} className="btn">
-                    Like
-                  </button>
-                  <input
-                    key={`commentInput${i}`}
-                    type="text"
-                    placeholder="comments..."
-                  />
-                  <input key={`submit${i}`} className="btn" type="submit" />
+        {this.props.userIndex ? (
+          <div className="container">
+            <h3>Hello {this.props.userIndex.first_name}</h3>
+            <div>
+              {this.props.userIndex.projects.reverse().map((p, i) => (
+                <div key={`card${i}`}>
+                  <div key={`profileName${i}`}>{this.props.userIndex.first_name} {this.props.userIndex.last_name}</div>
+                  <iframe title={`frameTitle${i}`} key={`frame${i}`} src={p.url} />
+                  <div key={`likesLength${i}`}>{p.likes.length} Likes</div>
+                  <div key={`commentsLength${i}`}>{p.comments.length} Comments</div>
                 </div>
-              ))
-            ) : (
-              <img src="./images/loading3.gif" alt="" />
-            )}
+              ))}
+            </div>
           </div>
-        </div>
+        ) : (
+          <img src="./images/loading3.gif" alt="" />
+        )}
       </>
     );
   }

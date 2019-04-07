@@ -27,8 +27,22 @@ class App extends Component {
   handleUpdateProjects = projects => {
     this.setState({ projects });
   };
-  handleUpdateUserIndex = userProjects => {
+  handleUpdateUserProjects = userProjects => {
     this.setState({ userProjects });
+  };
+  handleLikeButton = projectId => {
+    let projectsCopy = [...this.state.projects];
+    let userCopy = { ...this.state.user };
+    projectsCopy.forEach(p => {
+      if (p._id === projectId) {
+        if (p.likes.includes(userCopy.email)) {
+          p.likes.splice(userCopy.email, 1);
+        } else {
+          p.likes.push(userCopy.email);
+        }
+      }
+    });
+    this.setState({ projects: projectsCopy });
   };
 
   async componentDidMount() {
@@ -55,6 +69,7 @@ class App extends Component {
                     <HomePage
                       projects={this.state.projects}
                       user={userService.getUser()}
+                      handleLikeButton={this.handleLikeButton}
                       handleLogout={this.handleLogout}
                       handleUpdateProjects={this.handleUpdateProjects}
                     />
@@ -85,6 +100,7 @@ class App extends Component {
                       {...props}
                       user={userService.getUser()}
                       userIndex={this.state.userProjects}
+                      handleUpdateUserProjects={this.handleUpdateUserProjects}
                     />
                   ) : (
                     <LoginPage />

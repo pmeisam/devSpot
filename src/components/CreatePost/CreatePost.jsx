@@ -23,27 +23,35 @@ class CreatePost extends Component {
   };
   render() {
     return (
-      <div className="card-panel blue-grey darken-1 white-text">
-        <h4>Create Post</h4>
+      <div className="container">
         <form onSubmit={this.handleSubmit}>
-          {/* <input type="hidden" name="user" value={this.props.user}/> */}
-          <input
-            onChange={this.handleChange}
-            placeholder="url"
-            required
-            type="url"
-            name="url"
-            value={this.state.url}
-          />
-          <textarea
-            onChange={this.handleChange}
-            placeholder="caption"
-            name="caption"
-            cols="30"
-            rows="10"
-            value={this.state.caption}
-          />
-          <input type="submit" value="upload" />
+          <div class="form-group">
+            <label for="exampleInputEmail1">
+              Please Enter Your Project's URL
+            </label>
+            <input
+              className="form-control"
+              onChange={this.handleChange}
+              placeholder="URL"
+              required
+              type="url"
+              name="url"
+              value={this.state.url}
+            />
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Please Enter a Description</label>
+            <textarea
+              className="form-control"
+              onChange={this.handleChange}
+              placeholder="description..."
+              name="caption"
+              cols="30"
+              rows="10"
+              value={this.state.caption}
+            />
+          </div>
+          <input className="btn btn-primary" type="submit" value="upload" />
         </form>
       </div>
     );

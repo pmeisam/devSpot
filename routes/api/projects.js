@@ -6,6 +6,7 @@ const projectsCtrl = require('../../controllers/projects');
 router.get('/', projectsCtrl.show);
 router.get('/:username', projectsCtrl.userProjects);
 router.post('/', projectsCtrl.create);
+router.post('/:projectid/:userid', projectsCtrl.likeProject);
 
 
 /*---------- Protected Routes ----------*/
