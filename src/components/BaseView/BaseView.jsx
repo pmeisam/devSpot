@@ -7,7 +7,7 @@ class BaseView extends Component {
       <>
         <div className="container">
           <h1>devSpot</h1>
-          <div class="btn-group" > <Link className="btn btn-outline-primary" to="/signup">sign up</Link>
+          <div className="btn-group" > <Link className="btn btn-outline-primary" to="/signup">sign up</Link>
           <Link to="/login" className="btn btn-outline-info">log in</Link></div>
          &nbsp;&nbsp;&nbsp;
           <img src="./images/homepage.png" alt="" />

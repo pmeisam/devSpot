@@ -35,7 +35,7 @@ class LoginPage extends Component {
       <div className="container">
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
-            <label for="exampleInputEmail1">Email address</label>
+            <label>Email address</label>
             <input
               className="form-control"
               type="email"
@@ -50,7 +50,7 @@ class LoginPage extends Component {
             </small>
           </div>
           <div className="form-group">
-            <label for="exampleInputPassword1">Password</label>
+            <label>Password</label>
             <input
               type="password"
               className="form-control"

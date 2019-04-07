@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import BaseView from "../../components/BaseView/BaseView";
-import NavBar from "../../components/Navbar/Navbar";
 import SignupPage from "../SignupPage/SignupPage";
 import LoginPage from "../LoginPage/LoginPage";
+import userService from "../../utils/userService";
+import postService from "../../utils/postService";
+import BaseView from "../../components/BaseView/BaseView";
+import NavBar from "../../components/Navbar/Navbar";
 import HomePage from "../HomePage/HomePage";
 import ProfilePage from "../ProfilePage/ProfilePage";
 import CreatePostPage from "../CreatePostPage/CreatePostPage";
-import userService from "../../utils/userService";
-import postService from "../../utils/postService";
 import "./App.css";
 
 class App extends Component {
@@ -33,13 +33,15 @@ class App extends Component {
   handleLikeButton = projectId => {
     let projectsCopy = [...this.state.projects];
     let userCopy = { ...this.state.user };
-    projectsCopy.forEach(p => {
+    projectsCopy.forEach(async p => {
       if (p._id === projectId) {
+
         if (p.likes.includes(userCopy.email)) {
           p.likes.splice(userCopy.email, 1);
         } else {
           p.likes.push(userCopy.email);
         }
+        await postService.addLike({projectId: p._id, userCopy})
       }
     });
     this.setState({ projects: projectsCopy });
@@ -99,7 +101,7 @@ class App extends Component {
                     <ProfilePage
                       {...props}
                       user={userService.getUser()}
-                      userIndex={this.state.userProjects}
+                      userProjects={this.state.userProjects}
                       handleUpdateUserProjects={this.handleUpdateUserProjects}
                     />
                   ) : (

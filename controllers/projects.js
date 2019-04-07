@@ -1,11 +1,12 @@
 const Project = require("../models/project");
 const User = require("../models/user");
 
+
 module.exports = {
   create,
   show,
   userProjects,
-  likeProject,
+  likeProject
 };
 
 async function create(req, res) {
@@ -24,7 +25,7 @@ async function create(req, res) {
 
 async function show(req, res) {
   const projects = await Project.find({}).populate('user').sort({ createdAt: -1 });
-  console.log("user is: ",req.user)
+  // console.log('req.user: ', req.user)
   res.json(projects);
 }
 
@@ -36,9 +37,13 @@ async function userProjects(req, res) {
 }
 
 async function likeProject(req, res) {
-  Project.findOne({_id: req.params.projectid}, async function(err, project){
-    project.likes.push(req.params.userid);
-    await project.save();
+  Project.findOne({_id: req.body.projectId}, async function(err, project){
+    if(project.likes.includes(req.body.userCopy.email)){
+      project.likes.splice(req.body.userCopy.email, 1)
+    } else {
+      project.likes.push(req.body.userCopy.email);
+    }
+    project.save();
     res.json(project);
   })
 }
