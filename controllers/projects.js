@@ -1,12 +1,15 @@
 const Project = require("../models/project");
 const User = require("../models/user");
 
-
 module.exports = {
   create,
   show,
   userProjects,
-  likeProject
+  likeProject,
+  addcommentOnProject,
+  deleteComment,
+  deleteProject,
+  updateProject
 };
 
 async function create(req, res) {
@@ -44,6 +47,46 @@ async function likeProject(req, res) {
       project.likes.push(req.body.userCopy.email);
     }
     project.save();
+    res.json(project);
+  })
+}
+
+async function addcommentOnProject(req, res){
+  Project.findOne({_id: req.body.projectInfo._id}, async function(err, project){
+    project.comments.push({comment: req.body.comment, user: req.body.userInfo.user_name})
+    await project.save();
+    res.json(project)
+  });
+}
+
+async function deleteComment(req, res){
+  Project.findOne({_id: req.body.project._id}, async function(err, project){
+    project.comments.forEach( (c, idx) => {
+      if(c._id == req.body.comment._id){
+        console.log('we are inside if statement')
+        project.comments[idx].remove();
+      }
+    })
+    await project.save();
+    res.json(project)
+  })
+}
+
+async function deleteProject(req, res) {
+  console.log(req.body)
+  Project.findOne({_id: req.body._id}, function(err, project){
+    project.remove();
+    project.save();
+    res.json(project)
+  })
+}
+
+async function updateProject(req, res) {
+  console.log(req.body);
+  Project.findOne({_id: req.body._id},function(err, project){
+    project.url = req.body.url;
+    project.caption = req.body.caption;
+    project.save()
     res.json(project);
   })
 }

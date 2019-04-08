@@ -6,7 +6,11 @@ export default {
   create_post,
   index,
   userIndex,
-  addLike
+  addLike,
+  addComment,
+  removeComment,
+  deleteProject,
+  updateProject,
 };
 
 function create_post(project) {
@@ -33,7 +37,7 @@ function index() {
 function userIndex() {
   if (userService.getUser()) {
     const username = userService.getUser();
-    return fetch(BASE_URL + username.user_name , {
+    return fetch(BASE_URL + username.user_name, {
       method: "GET",
       headers: { Authorization: "Bearer " + tokenService.getToken() }
     }).then(res => res.json());
@@ -46,5 +50,41 @@ function addLike(projectId) {
     headers: new Headers({ "Content-Type": "application/json" }),
     body: JSON.stringify(projectId)
   };
-  return fetch(BASE_URL + "likebtn", options).then(res => res.text());
+  return fetch(BASE_URL + "likebtn", options).then(res => res.json());
+}
+
+function addComment(projectId) {
+  const options = {
+    method: "POST",
+    headers: new Headers({ "Content-Type": "application/json" }),
+    body: JSON.stringify(projectId)
+  };
+  return fetch(BASE_URL + "createcomment", options).then(res => res.json());
+}
+
+function removeComment(project) {
+  const options = {
+    method: "POST",
+    headers: new Headers({'Content-Type': 'application/json'}),
+    body: JSON.stringify(project)
+  };
+  return fetch(BASE_URL + 'deletecomment', options).then(res => res.json());
+}
+
+function deleteProject(project) {
+  const options = {
+    method: "POST",
+    headers: new Headers({'Content-Type': 'application/json'}),
+    body: JSON.stringify(project)
+  }
+  return fetch(BASE_URL + 'deleteproject', options).then(res=>res.json())
+}
+
+function updateProject(project) {
+  const options = {
+    method: "POST",
+    headers: new Headers({'Content-Type': 'application/json'}),
+    body: JSON.stringify(project)
+  }
+  return fetch(BASE_URL + 'updateproject', options).then(res => res.json);
 }

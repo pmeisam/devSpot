@@ -35,17 +35,42 @@ class App extends Component {
     let userCopy = { ...this.state.user };
     projectsCopy.forEach(async p => {
       if (p._id === projectId) {
-
         if (p.likes.includes(userCopy.email)) {
           p.likes.splice(userCopy.email, 1);
         } else {
           p.likes.push(userCopy.email);
         }
-        await postService.addLike({projectId: p._id, userCopy})
+        await postService.addLike({ projectId: p._id, userCopy });
       }
     });
     this.setState({ projects: projectsCopy });
   };
+  handleCommentSubmit = (projects) => {
+    this.setState({projects});
+  };
+  handleCommentDelete = (project, comment) => {
+    let projectsCopy = [...this.state.projects];
+    let projectCopy = projectsCopy.filter(p=> {return p._id === project._id});
+    console.log(projectCopy)
+    projectsCopy[0].comments.filter( (c, i) => {
+      if(c._id === comment._id){
+        projectsCopy[0].comments.splice(i, 1);
+    }});
+    postService.removeComment({project, comment});
+    this.setState({projects: projectsCopy})
+  }
+  handleProjectDelete = (project) => {
+    const userProjectsCopy = {...this.state.userProjects}
+    const userProjects = this.state.userProjects.projects.filter( (p)=>{
+      return p._id !== project._id
+    })
+    postService.deleteProject(project)
+    userProjectsCopy.projects = userProjects;
+    this.setState({userProjects: userProjectsCopy})
+  }
+  handleProjectUpdate = (userProjects) => {
+    this.setState({userProjects})
+  }
 
   async componentDidMount() {
     const user = userService.getUser();
@@ -53,6 +78,7 @@ class App extends Component {
     const userProjects = await postService.userIndex();
     this.setState({ user, projects, userProjects });
   }
+
   render() {
     return (
       <div>
@@ -71,9 +97,11 @@ class App extends Component {
                     <HomePage
                       projects={this.state.projects}
                       user={userService.getUser()}
+                      handleCommentSubmit={this.handleCommentSubmit}
                       handleLikeButton={this.handleLikeButton}
                       handleLogout={this.handleLogout}
                       handleUpdateProjects={this.handleUpdateProjects}
+                      handleCommentDelete={this.handleCommentDelete}
                     />
                   ) : (
                     <div />
@@ -94,16 +122,20 @@ class App extends Component {
                   )
                 }
               />
+              
               <Route
                 path="/:username"
                 render={props =>
                   userService.getUser() ? (
-                    <ProfilePage
-                      {...props}
-                      user={userService.getUser()}
-                      userProjects={this.state.userProjects}
-                      handleUpdateUserProjects={this.handleUpdateUserProjects}
-                    />
+                        <ProfilePage
+                          {...props}
+                          user={userService.getUser()}
+                          userProjects={this.state.userProjects}
+                          handleProjectUpdate={this.handleProjectUpdate}
+                          handleProjectDelete={this.handleProjectDelete}
+                          handleUpdateUserProjects={this.handleUpdateUserProjects}
+                        />
+        
                   ) : (
                     <LoginPage />
                   )
@@ -125,7 +157,6 @@ class App extends Component {
                   />
                 )}
               />
-
               <Route
                 exact
                 path="/signup"

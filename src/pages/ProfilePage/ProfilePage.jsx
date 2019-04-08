@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import {Route, Link, Switch} from 'react-router-dom';
 import postService from "../../utils/postService";
+import EditProject from '../../components/EditProject/EditProject';
 import "./ProfilePage.css";
 
 class ProfilePage extends Component {
@@ -8,9 +10,8 @@ class ProfilePage extends Component {
     this.props.handleUpdateUserProjects(projects);
   }
   render() {
-    console.log(this.props.userProjects)
     return (
-      <>
+      <Switch>
         {this.props.userProjects ? (
           <div className="container">
             <h3>Hello {this.props.userProjects.first_name}</h3>
@@ -26,6 +27,24 @@ class ProfilePage extends Component {
                     key={`frame${i}`}
                     src={p.url}
                   />
+                  <Link className="btn btn-success" 
+                        to={`/${this.props.userProjects.user_name}/edit-profile/${p._id}`}>
+                        Update Project
+                  </Link>
+                  <Route
+                    exact
+                    path={`/:${this.props.userProjects.user_name}/edit-profile/:${p._id}`}
+                    render={({history}) => 
+                    <EditProject 
+                      history={history}
+                      project={p}
+                      userProjects={this.props.userProjects}
+                      handleProjectUpdate={this.props.handleProjectUpdate}/>
+
+                    }
+                  />
+                  <button onClick={()=> this.props.handleProjectDelete(p)} 
+                          className="btn btn-danger">Delete Project</button>
                   <div key={`likesLength${i}`}>{p.likes.length} Likes</div>
                   <div key={`commentsLength${i}`}>
                     {p.comments.length} Comments
@@ -35,9 +54,9 @@ class ProfilePage extends Component {
             </div>
           </div>
         ) : (
-          <img src="./images/loading3.gif"/>
+          <img src="./images/loading3.gif" alt=''/>
         )}
-      </>
+        </Switch>
     );
   }
 }
