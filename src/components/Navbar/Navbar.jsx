@@ -219,7 +219,7 @@ class PrimarySearchAppBar extends React.Component {
               <IconButton color="inherit">
                 <NotificationsIcon />
               </IconButton>
-              <Link className="links" to="/create-post">
+              <Link className="links" to="/createpost">
                 <IconButton color="inherit">
                   <AddIcon />
                 </IconButton>

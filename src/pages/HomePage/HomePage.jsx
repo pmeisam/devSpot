@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import { Route, Redirect } from "react-router-dom";
 import "./HomePage.css";
 import postService from "../../utils/postService";
 import userService from "../../utils/userService";
-import CreatePost from "../../components/CreatePost/CreatePost";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import classnames from "classnames";
@@ -66,9 +64,9 @@ class HomePage extends Component {
     let projectCopy = { ...projectsCopy[e.target.id] };
     if (this.state.comment.length > 0) {
       projectCopy.comments.push({
-        "comment": this.state.comment,
-        "user_name": user.user_name,
-        "user_id": user._id
+        comment: this.state.comment,
+        user_name: user.user_name,
+        user_id: user._id
       });
       postService.addComment({
         comment: this.state.comment,
@@ -95,17 +93,6 @@ class HomePage extends Component {
     return (
       <>
         <div style={{ height: "75px" }} />
-        <Route
-          exact
-          path="/create-post"
-          render={({ history }) =>
-            userService.getUser() ? (
-              <CreatePost history={history} user={userService.getUser()} />
-            ) : (
-              <Redirect to="/login" />
-            )
-          }
-        />
         {this.props.projects ? (
           this.props.projects.map((p, i) => (
             <Card className={classes.card} key={`card${i}`}>
@@ -124,12 +111,17 @@ class HomePage extends Component {
                 subheader={p.createdAt}
               />
               <iframe title={`iframe${i}`} className="frame" src={p.url} />
-              <a href={p.url} _blank="true">Link to the project</a>
-              <h6><i className="fas fa-heart"></i>&nbsp;{p.likes.length}</h6>
+              <a href={p.url} _blank="true">
+                Link to the project
+              </a>
+              <h6>
+                <i className="fas fa-heart" />
+                &nbsp;{p.likes.length}
+              </h6>
               <CardContent>
                 {p.caption ? (
                   <Typography component="p">
-                    <span>{p.user[0].user_name}:&nbsp; </span>
+                    <span style={{ fontWeight: "900" }}>{p.user[0].user_name}:&nbsp; </span>
                     {p.caption}
                   </Typography>
                 ) : (

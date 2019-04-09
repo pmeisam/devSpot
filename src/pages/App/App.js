@@ -113,7 +113,7 @@ class App extends Component {
               />
               <Route
                 exact
-                path="/create-post"
+                path="/createpost"
                 render={({ history }) =>
                   userService.getUser() ? (
                     <CreatePostPage
