@@ -23,7 +23,8 @@ import Button from "@material-ui/core/Button";
 const styles = theme => ({
   card: {
     maxWidth: "90%",
-    margin: "20px 10%"
+    margin: "20px 10%",
+    backgroundColor: '#EEE2DC'
   },
   media: {
     height: 0,
@@ -111,14 +112,16 @@ class HomePage extends Component {
                 subheader={p.createdAt}
               />
               <iframe title={`iframe${i}`} className="frame" src={p.url} />
-              <a href={p.url} _blank="true">
-                Link to the project
-              </a>
-              <h6>
-                <i className="fas fa-heart" />
-                &nbsp;{p.likes.length}
-              </h6>
               <CardContent>
+                <a href={p.url} _blank="true">
+                  Link to the project
+                </a>
+                <Typography>
+                  <h6>{p.likes.length}&nbsp;
+                    <i className="fas fa-heart" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;{p.comments.length}&nbsp;<i class="fas fa-comment"></i>
+                  </h6>
+                </Typography>
                 {p.caption ? (
                   <Typography component="p">
                     <span style={{ fontWeight: "900" }}>{p.user[0].user_name}:&nbsp; </span>
@@ -130,9 +133,19 @@ class HomePage extends Component {
               </CardContent>
               <CardActions className={classes.actions} disableActionSpacing>
                 <IconButton aria-label="Add to favorites">
-                  <FavoriteIcon
+                 {/*  <FavoriteIcon
                     onClick={() => this.props.handleLikeButton(p._id)}
-                  />
+                  /> */}
+                  {p.likes.includes(userService.getUser().email) ? (
+                    <FavoriteIcon
+                      color="secondary"
+                      onClick={() => this.props.handleLikeButton(p._id)}
+                    />
+                  ) : (
+                    <FavoriteIcon
+                      onClick={() => this.props.handleLikeButton(p._id)}
+                    />
+                  )}
                 </IconButton>
 
                 <IconButton

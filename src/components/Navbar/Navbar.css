@@ -16,10 +16,7 @@
 p {
     margin-top: 14px;
 }
-.MuiAppBar-colorPrimary-19 {
-  background-color: yellow;
-}
 .navbar {
-  background-color: "#03a9f4";
+  background-color: #9575cd;
   display: fixed;
 }

@@ -6,7 +6,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #e1f5fe;
+  background-color: #BAB2B5;
 }
 .app {
   margin: 0 auto;
@@ -15,3 +15,4 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+button:focus {outline:0;}

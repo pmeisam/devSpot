@@ -155,12 +155,15 @@ class PrimarySearchAppBar extends React.Component {
           </IconButton>
           <p>Messages</p>
         </MenuItem>
+        <Link style={{color: 'black', textDecoration: 'none'}} to="/createpost">
         <MenuItem onClick={this.handleMobileMenuClose}>
           <IconButton color="inherit">
             <AddIcon />
           </IconButton>
           <p>Upload project</p>
+          
         </MenuItem>
+        </Link>
         <MenuItem onClick={this.handleMobileMenuClose}>
           <IconButton color="inherit">
             <NotificationsIcon />
@@ -178,7 +181,7 @@ class PrimarySearchAppBar extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar style={{backgroundColor: "#03a9f4", position: 'fixed'}} position="static">
+        <AppBar style={{backgroundColor: "#123C69", position: 'fixed'}} position="static">
           <Toolbar>
             <IconButton
               className={classes.menuButton}

@@ -3,10 +3,10 @@ const router = express.Router();
 const projectsCtrl = require("../../controllers/projects");
 
 /*---------- Public Routes ----------*/
-router.post("/create-post", projectsCtrl.create);
 
 /*---------- Protected Routes ----------*/
 router.use(require("../../config/auth"));
+router.post("/create-post", projectsCtrl.create);
 router.get("/", checkAuth, projectsCtrl.show);
 router.get("/:username", checkAuth, projectsCtrl.userProjects);
 router.post("/likebtn", projectsCtrl.likeProject);

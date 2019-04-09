@@ -15,7 +15,7 @@ module.exports = {
 async function create(req, res) {
   const project = new Project(req.body);
   try {
-    User.findOne({ _id: project.user }, function(err, user) {
+    User.findOne({ _id: project.user },  function(err, user) {
       user.projects.push(project.id);
       user.save();
     });
@@ -72,7 +72,6 @@ async function deleteComment(req, res) {
   Project.findOne({ _id: req.body.project._id }, async function(err, project) {
     project.comments.forEach((c, idx) => {
       if (c._id == req.body.comment._id) {
-        console.log("we are inside if statement");
         project.comments[idx].remove();
       }
     });
@@ -82,8 +81,15 @@ async function deleteComment(req, res) {
 }
 
 async function deleteProject(req, res) {
-  console.log(req.body);
+  // console.log(req.body);
   Project.findOne({ _id: req.body._id }, function(err, project) {
+    User.findOne({_id: project.user[0]}, function(err, user){
+      const projects = user.projects.filter(p=>{
+        return p != req.body._id
+      })
+      user.projects = projects;
+      user.save()
+    })
     project.remove();
     project.save();
     res.json(project);
@@ -91,7 +97,6 @@ async function deleteProject(req, res) {
 }
 
 async function updateProject(req, res) {
-  console.log(req.body);
   Project.findOne({ _id: req.body._id }, function(err, project) {
     project.url = req.body.url;
     project.caption = req.body.caption;

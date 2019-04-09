@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Route, Link } from "react-router-dom";
 import postService from "../../utils/postService";
 import EditProject from "../../components/EditProject/EditProject";
-import Fab from "@material-ui/core/Fab";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import PropTypes from "prop-types";
@@ -19,10 +18,10 @@ import Typography from "@material-ui/core/Typography";
 import red from "@material-ui/core/colors/red";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import "./ProfilePage.css";
+import userService from "../../utils/userService";
 
 const styles = theme => ({
   card: {
@@ -56,9 +55,37 @@ const styles = theme => ({
   }
 });
 class ProfilePage extends Component {
-  state = { expanded: false };
+  state = { expanded: false, comment: "", user_name: "", user_id: null };
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
+  };
+  handleChange = (e) => {
+    this.setState({[e.target.name]: e.target.value});
+  }
+  handleCommentSubmit = e => {
+    e.preventDefault();
+    const user = userService.getUser();
+    let userProjectsCopy = {...this.props.userProjects};
+    console.log(userProjectsCopy)
+    console.log(e.target.id)
+    let projectCopy = { ...userProjectsCopy.projects[e.target.id] };
+    console.log( projectCopy )
+    if (this.state.comment.length > 0) {
+      projectCopy.comments.push({
+        comment: this.state.comment,
+        user_name: user.user_name,
+        user_id: user._id
+      });
+      postService.addComment({
+        comment: this.state.comment,
+        user_name: user.user_name,
+        user_id: user._id,
+        userInfo: user,
+        projectInfo: projectCopy
+      });
+    }
+    this.props.handleCommentSubmitOnProfile(userProjectsCopy);
+    this.setState({ comment: "" });
   };
   async componentDidMount() {
     const projects = await postService.userIndex();
@@ -79,15 +106,36 @@ class ProfilePage extends Component {
                   </Avatar>
                 }
                 action={
-                  <IconButton>
-                    <MoreVertIcon />
-                  </IconButton>
+                  <>
+                    <IconButton
+                      onClick={() => this.props.handleProjectDelete(p)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                    <Link
+                      to={`/${this.props.userProjects.user_name}/edit-profile/${
+                        p._id
+                      }`}
+                    >
+                      <IconButton>
+                        <EditIcon />
+                      </IconButton>
+                    </Link>
+                  </>
                 }
                 title={this.props.userProjects.user_name}
                 subheader={p.createdAt}
               />
               <iframe title={`frameTitle${i}`} key={`frame${i}`} src={p.url} />
               <CardContent>
+                <Typography>
+                  <h6 key={`likesLength${i}`}>
+                    {p.likes.length}&nbsp;
+                    <i className="fas fa-heart" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;{p.comments.length}&nbsp;
+                    <i class="fas fa-comment" />
+                  </h6>
+                </Typography>
                 {p.caption ? (
                   <Typography component="p">
                     <span style={{ fontWeight: "900" }}>
@@ -99,15 +147,6 @@ class ProfilePage extends Component {
                   <p />
                 )}
               </CardContent>
-              <Link
-                to={`/${this.props.userProjects.user_name}/edit-profile/${
-                  p._id
-                }`}
-              >
-                <Fab color="secondary" aria-label="Edit" className="fab">
-                  <EditIcon />
-                </Fab>
-              </Link>
               <Route
                 exact
                 path={`/:${this.props.userProjects.user_name}/edit-profile/:${
@@ -122,22 +161,19 @@ class ProfilePage extends Component {
                   />
                 )}
               />
-              <Fab
-                onClick={() => this.props.handleProjectDelete(p)}
-                aria-label="Delete"
-                className="fab"
-              >
-                <DeleteIcon />
-              </Fab>
-              <div key={`likesLength${i}`}>{p.likes.length} Likes</div>
-              <div key={`commentsLength${i}`}>{p.comments.length} Comments</div>
               <CardActions className={classes.actions} disableActionSpacing>
                 <IconButton aria-label="Add to favorites">
-                  <FavoriteIcon
-                    onClick={() => this.props.handleLikeButton(p._id)}
-                  />
+                  {p.likes.includes(userService.getUser().email) ? (
+                    <FavoriteIcon
+                      color="secondary"
+                      onClick={() => this.props.handleLikeBtnOnProfile(p._id)}
+                    />
+                  ) : (
+                    <FavoriteIcon
+                      onClick={() => this.props.handleLikeBtnOnProfile(p._id)}
+                    />
+                  )}
                 </IconButton>
-
                 <IconButton
                   className={classnames(classes.expand, {
                     [classes.expandOpen]: this.state.expanded
@@ -161,7 +197,10 @@ class ProfilePage extends Component {
                               color="inherit"
                               type="submit"
                               onClick={() =>
-                                this.props.handleCommentDelete(p, comment)
+                                this.props.handleCommentDeleteOnProfile(
+                                  p,
+                                  comment
+                                )
                               }
                             >
                               <i
@@ -169,18 +208,6 @@ class ProfilePage extends Component {
                                 className="fas fa-eraser"
                               />
                             </Button>
-                            <Button
-                              size="small"
-                              color="inherit"
-                              type="submit"
-                              disabled
-                            >
-                              <i
-                                style={{ fontSize: "20px" }}
-                                className="fas fa-eraser"
-                              />
-                            </Button>
-                            }
                             <span style={{ fontWeight: "900" }}>
                               {comment.user_name}
                             </span>

@@ -45,23 +45,53 @@ class App extends Component {
     });
     this.setState({ projects: projectsCopy });
   };
+  handleLikeBtnOnProfile = projectId => {
+    let projectsCopy = {...this.state.userProjects};
+    let userCopy = { ...this.state.user };
+    projectsCopy.projects.forEach(async p => {
+      if (p._id === projectId) {
+        if (p.likes.includes(userCopy.email)) {
+          p.likes.splice(userCopy.email, 1);
+        } else {
+          p.likes.push(userCopy.email);
+        }
+        await postService.addLike({ projectId: p._id, userCopy });
+      }
+    });
+    this.setState({ userProjects: projectsCopy });
+  }
   handleCommentSubmit = projects => {
     this.setState({ projects });
+  };
+  handleCommentSubmitOnProfile = userProjects => {
+    this.setState({ userProjects });
   };
   handleCommentDelete = (project, comment) => {
     let projectsCopy = [...this.state.projects];
     let projectCopy = projectsCopy.filter(p => {
       return p._id === project._id;
     });
-    projectCopy[0].comments.forEach((c, i) => {
-      if (c._id === comment._id) {
-        console.log(c);
-        projectCopy[0].comments.splice(i, 1);
-      }
+    // console.log(projectCopy)
+    const commentsCopy = projectCopy[0].comments.filter((c) => {
+      return c._id !== comment._id
     });
+    console.log(commentsCopy)
+    projectCopy[0].comments = commentsCopy;
     postService.removeComment({ project, comment });
     this.setState({ projects: projectsCopy });
   };
+
+  handleCommentDeleteOnProfile = (project, comment) => {
+    let userProjects = {...this.state.userProjects};
+    const projectCopy = userProjects.projects.filter( p => { return p._id === project._id} );
+    console.log(projectCopy)
+    const commentsCopy = projectCopy[0].comments.filter( c => c._id !== comment._id)
+    console.log(commentsCopy)
+    projectCopy[0].comments = commentsCopy;
+    postService.removeComment({project, comment});
+    this.setState({userProjects: userProjects});
+  }
+
   handleProjectDelete = project => {
     const userProjectsCopy = { ...this.state.userProjects };
     const userProjects = this.state.userProjects.projects.filter(p => {
@@ -125,7 +155,6 @@ class App extends Component {
                   )
                 }
               />
-
               <Route
                 path="/:username"
                 render={props =>
@@ -134,6 +163,9 @@ class App extends Component {
                       {...props}
                       user={userService.getUser()}
                       userProjects={this.state.userProjects}
+                      handleCommentSubmitOnProfile={this.handleCommentSubmitOnProfile}
+                      handleLikeBtnOnProfile={this.handleLikeBtnOnProfile}
+                      handleCommentDeleteOnProfile={this.handleCommentDeleteOnProfile}
                       handleProjectUpdate={this.handleProjectUpdate}
                       handleProjectDelete={this.handleProjectDelete}
                       handleUpdateUserProjects={this.handleUpdateUserProjects}

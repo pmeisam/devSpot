@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import userService from "../../utils/userService";
 import postService from "../../utils/postService";
-
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import {Link} from 'react-router-dom'
 class EditProject extends Component {
   state = {
     url: "",
@@ -26,35 +28,58 @@ class EditProject extends Component {
   };
   render() {
     return (
-      <div className="container">
-        <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <label>Please Enter Your Project's URL</label>
-            <input
-              className="form-control"
-              onChange={this.handleChange}
-              placeholder="URL"
-              required
-              type="url"
-              name="url"
-              value={this.state.url}
-            />
-          </div>
-          <div className="form-group">
-            <label>Please Enter a Description</label>
-            <textarea
-              className="form-control"
-              onChange={this.handleChange}
-              placeholder="description..."
-              name="description"
-              cols="30"
-              rows="10"
-              value={this.state.description}
-            />
-          </div>
-          <input className="btn btn-primary" type="submit" value="upload" />
-        </form>
-      </div>
+      <form
+        style={{ display: "flex", flexDirection: "column", alignItems: 'center' }}
+        onSubmit={this.handleSubmit}
+      >
+        <TextField
+          required
+          // fullWidth
+          style={{width: '75vw'}}
+          id="outlined-name"
+          label="Project's URL"
+          margin="normal"
+          variant="outlined"
+          placeholder="Project's URL..."
+          className="form-control"
+          onChange={this.handleChange}
+          placeholder="URL"
+          required
+          type="url"
+          name="url"
+          value={this.state.url}
+        />
+        <br />
+        <TextField
+          required
+          style={{width: '75vw'}}
+          placeholder="Description"
+          className="form-control"
+          margin="normal"
+          variant="outlined"
+          label="Description"
+          onChange={this.handleChange}
+          placeholder="description..."
+          name="description"
+          cols="30"
+          rows="10"
+          value={this.state.description}
+        />
+        <br />
+        <div>
+          <Button
+            size="large"
+            variant="outlined"
+            color="primary"
+            className="btn btn-primary"
+            type="submit"
+          >
+            Done
+          </Button>
+          &nbsp;&nbps;&nbsp;
+          <Link to={`/${userService.getUser().user_name}`}>Cancel</Link>
+        </div>
+      </form>
     );
   }
 }
