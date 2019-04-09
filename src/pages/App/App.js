@@ -45,32 +45,35 @@ class App extends Component {
     });
     this.setState({ projects: projectsCopy });
   };
-  handleCommentSubmit = (projects) => {
-    this.setState({projects});
+  handleCommentSubmit = projects => {
+    this.setState({ projects });
   };
   handleCommentDelete = (project, comment) => {
     let projectsCopy = [...this.state.projects];
-    let projectCopy = projectsCopy.filter(p=> {return p._id === project._id});
-    console.log(projectCopy)
-    projectsCopy[0].comments.filter( (c, i) => {
-      if(c._id === comment._id){
-        projectsCopy[0].comments.splice(i, 1);
-    }});
-    postService.removeComment({project, comment});
-    this.setState({projects: projectsCopy})
-  }
-  handleProjectDelete = (project) => {
-    const userProjectsCopy = {...this.state.userProjects}
-    const userProjects = this.state.userProjects.projects.filter( (p)=>{
-      return p._id !== project._id
-    })
-    postService.deleteProject(project)
+    let projectCopy = projectsCopy.filter(p => {
+      return p._id === project._id;
+    });
+    projectCopy[0].comments.forEach((c, i) => {
+      if (c._id === comment._id) {
+        console.log(c);
+        projectCopy[0].comments.splice(i, 1);
+      }
+    });
+    postService.removeComment({ project, comment });
+    this.setState({ projects: projectsCopy });
+  };
+  handleProjectDelete = project => {
+    const userProjectsCopy = { ...this.state.userProjects };
+    const userProjects = this.state.userProjects.projects.filter(p => {
+      return p._id !== project._id;
+    });
+    postService.deleteProject(project);
     userProjectsCopy.projects = userProjects;
-    this.setState({userProjects: userProjectsCopy})
-  }
-  handleProjectUpdate = (userProjects) => {
-    this.setState({userProjects})
-  }
+    this.setState({ userProjects: userProjectsCopy });
+  };
+  handleProjectUpdate = userProjects => {
+    this.setState({ userProjects });
+  };
 
   async componentDidMount() {
     const user = userService.getUser();
@@ -122,20 +125,19 @@ class App extends Component {
                   )
                 }
               />
-              
+
               <Route
                 path="/:username"
                 render={props =>
                   userService.getUser() ? (
-                        <ProfilePage
-                          {...props}
-                          user={userService.getUser()}
-                          userProjects={this.state.userProjects}
-                          handleProjectUpdate={this.handleProjectUpdate}
-                          handleProjectDelete={this.handleProjectDelete}
-                          handleUpdateUserProjects={this.handleUpdateUserProjects}
-                        />
-        
+                    <ProfilePage
+                      {...props}
+                      user={userService.getUser()}
+                      userProjects={this.state.userProjects}
+                      handleProjectUpdate={this.handleProjectUpdate}
+                      handleProjectDelete={this.handleProjectDelete}
+                      handleUpdateUserProjects={this.handleUpdateUserProjects}
+                    />
                   ) : (
                     <LoginPage />
                   )

@@ -1,7 +1,10 @@
 import React, { Component } from "react";
-import {Route, Link, Switch} from 'react-router-dom';
+import { Route, Link, Switch } from "react-router-dom";
 import postService from "../../utils/postService";
-import EditProject from '../../components/EditProject/EditProject';
+import EditProject from "../../components/EditProject/EditProject";
+import Fab from "@material-ui/core/Fab";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 import "./ProfilePage.css";
 
 class ProfilePage extends Component {
@@ -27,24 +30,33 @@ class ProfilePage extends Component {
                     key={`frame${i}`}
                     src={p.url}
                   />
-                  <Link className="btn btn-success" 
-                        to={`/${this.props.userProjects.user_name}/edit-profile/${p._id}`}>
-                        Update Project
+                  <Link
+                    to={`/${this.props.userProjects.user_name}/edit-profile/${
+                      p._id
+                    }`}
+                  >
+                    <Fab color="secondary" aria-label="Edit" className="fab">
+                      <EditIcon />
+                    </Fab>
                   </Link>
                   <Route
                     exact
-                    path={`/:${this.props.userProjects.user_name}/edit-profile/:${p._id}`}
-                    render={({history}) => 
-                    <EditProject 
-                      history={history}
-                      project={p}
-                      userProjects={this.props.userProjects}
-                      handleProjectUpdate={this.props.handleProjectUpdate}/>
-
-                    }
+                    path={`/:${
+                      this.props.userProjects.user_name
+                    }/edit-profile/:${p._id}`}
+                    render={({ history }) => (
+                      <EditProject
+                        history={history}
+                        project={p}
+                        userProjects={this.props.userProjects}
+                        handleProjectUpdate={this.props.handleProjectUpdate}
+                      />
+                    )}
                   />
-                  <button onClick={()=> this.props.handleProjectDelete(p)} 
-                          className="btn btn-danger">Delete Project</button>
+                  
+                  <Fab onClick={() => this.props.handleProjectDelete(p)}aria-label="Delete" className="fab">
+                      <DeleteIcon />
+                  </Fab>
                   <div key={`likesLength${i}`}>{p.likes.length} Likes</div>
                   <div key={`commentsLength${i}`}>
                     {p.comments.length} Comments
@@ -54,9 +66,9 @@ class ProfilePage extends Component {
             </div>
           </div>
         ) : (
-          <img src="./images/loading3.gif" alt=''/>
+          <img src="./images/loading3.gif" alt="" />
         )}
-        </Switch>
+      </Switch>
     );
   }
 }

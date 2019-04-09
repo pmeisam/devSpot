@@ -10,7 +10,7 @@ const projectSchema = new Schema(
             ref: 'User'
         }],
         likes: [],
-        comments: [{user: String, comment: String}]
+        comments: [{user_name: String, user_id: String, comment: String}]
     },
     {
         timestamps: true

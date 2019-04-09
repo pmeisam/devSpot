@@ -27,7 +27,9 @@ async function create(req, res) {
 }
 
 async function show(req, res) {
-  const projects = await Project.find({}).populate('user').sort({ createdAt: -1 });
+  const projects = await Project.find({})
+    .populate("user")
+    .sort({ createdAt: -1 });
   // console.log('req.user: ', req.user)
   res.json(projects);
 }
@@ -40,53 +42,60 @@ async function userProjects(req, res) {
 }
 
 async function likeProject(req, res) {
-  Project.findOne({_id: req.body.projectId}, async function(err, project){
-    if(project.likes.includes(req.body.userCopy.email)){
-      project.likes.splice(req.body.userCopy.email, 1)
+  Project.findOne({ _id: req.body.projectId }, async function(err, project) {
+    if (project.likes.includes(req.body.userCopy.email)) {
+      project.likes.splice(req.body.userCopy.email, 1);
     } else {
       project.likes.push(req.body.userCopy.email);
     }
     project.save();
     res.json(project);
-  })
-}
-
-async function addcommentOnProject(req, res){
-  Project.findOne({_id: req.body.projectInfo._id}, async function(err, project){
-    project.comments.push({comment: req.body.comment, user: req.body.userInfo.user_name})
-    await project.save();
-    res.json(project)
   });
 }
 
-async function deleteComment(req, res){
-  Project.findOne({_id: req.body.project._id}, async function(err, project){
-    project.comments.forEach( (c, idx) => {
-      if(c._id == req.body.comment._id){
-        console.log('we are inside if statement')
+async function addcommentOnProject(req, res) {
+  Project.findOne({ _id: req.body.projectInfo._id }, async function(
+    err,
+    project
+  ) {
+    project.comments.push({
+      comment: req.body.comment,
+      user_name: req.body.userInfo.user_name,
+      user_id: req.body.userInfo._id
+    });
+    await project.save();
+    res.json(project);
+  });
+}
+
+async function deleteComment(req, res) {
+  Project.findOne({ _id: req.body.project._id }, async function(err, project) {
+    project.comments.forEach((c, idx) => {
+      if (c._id == req.body.comment._id) {
+        console.log("we are inside if statement");
         project.comments[idx].remove();
       }
-    })
+    });
     await project.save();
-    res.json(project)
-  })
+    res.json(project);
+  });
 }
 
 async function deleteProject(req, res) {
-  console.log(req.body)
-  Project.findOne({_id: req.body._id}, function(err, project){
+  console.log(req.body);
+  Project.findOne({ _id: req.body._id }, function(err, project) {
     project.remove();
     project.save();
-    res.json(project)
-  })
+    res.json(project);
+  });
 }
 
 async function updateProject(req, res) {
   console.log(req.body);
-  Project.findOne({_id: req.body._id},function(err, project){
+  Project.findOne({ _id: req.body._id }, function(err, project) {
     project.url = req.body.url;
     project.caption = req.body.caption;
-    project.save()
+    project.save();
     res.json(project);
-  })
+  });
 }

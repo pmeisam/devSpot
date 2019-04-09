@@ -1,50 +1,25 @@
-.floating-menu {
-  position: fixed;
-  right: 40px;
-  bottom: 40px;
-  height: 42px;
-  text-align: right;
-  transition: height 250ms ease-in-out;
+.PrimarySearchAppBar-root-1 {
+  width: 0;
 }
-
-.floating-menu.open {
-  height: 310px;
-  overflow: hidden;
+.links {
+  color: white;
 }
-
-.floating-menu.open .floating-menu-item {
-  margin-top: 8px;
+.links:hover {
+  color: lightgray;
+  text-decoration: none;
 }
-
-.floating-menu-item label {
-  display: inline-block;
-  margin-right: 8px;
-  padding: 4px 10px;
-  border-radius: 12px;
-  background: rgba(0, 0, 0, 0.25);
-  opacity: 0;
-  transition: opacity 250ms ease-in-out;
+.logo {
+  font-family: "Mrs Sheppards", cursive;
+  font-size: 40px;
+  margin-right: 25px;
 }
-
-.floating-menu.open .floating-menu-item label {
-  opacity: 0.4;
+p {
+    margin-top: 14px;
 }
-
-.floating-menu-icon {
-  display: inline-block;
-  width: 60px;
-  height: 60px;
-  line-height: 59px;
-  vertical-align: middle;
-  background: #e53935;
-  border-radius: 50%;
-  border: none;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  text-align: center;
+.MuiAppBar-colorPrimary-19 {
+  background-color: yellow;
 }
-
-.floating-menu-icon .material-icons {
-  font-size: 32px;
-  color: #fff;
-  vertical-align: middle;
+.navbar {
+  background-color: "#03a9f4";
+  display: fixed;
 }
