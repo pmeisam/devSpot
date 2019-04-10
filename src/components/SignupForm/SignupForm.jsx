@@ -55,7 +55,6 @@ class SignupForm extends Component {
             flexDirection: "column",
             alignItems: "center"
           }}
-          onSubmit={this.handleSubmit}
         >
           <TextField
             required
@@ -130,16 +129,18 @@ class SignupForm extends Component {
             onChange={this.handleChange}
           />
           <div>
-          <Button
-            disabled={this.isFormInvalid()}
-            size="large"
-            variant="outlined"
-            color="primary"
-          >
-            Sign Up
-          </Button>
-          &nbsp;&nbsp;
-          <Link to="/">Cancel</Link></div>
+            <Button
+              disabled={this.isFormInvalid()}
+              size="large"
+              variant="outlined"
+              color="primary"
+              onClick={this.handleSubmit}
+            >
+              Sign Up
+            </Button>
+            &nbsp;&nbsp;
+            <Link to="/">Cancel</Link>
+          </div>
         </form>
       </div>
     );

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import userService from "../../utils/userService";
 import { Route, Link } from "react-router-dom";
 import postService from "../../utils/postService";
 import EditProject from "../../components/EditProject/EditProject";
@@ -20,111 +21,68 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import "./ProfilePage.css";
-import userService from "../../utils/userService";
 
 const styles = theme => ({
-  card: {
-    maxWidth: "90%",
-    margin: "20px 10%"
-  },
-  media: {
-    height: 0,
-    paddingTop: "56.25%" // 16:9
-  },
-  actions: {
-    display: "flex"
-  },
-  expand: {
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest
-    })
-  },
-  expandOpen: {
-    transform: "rotate(180deg)"
-  },
-  avatar: {
-    backgroundColor: red[500]
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: "60vw"
-  }
-});
-
-class ProfilePage extends Component {
-  state = { expanded: false, comment: "", user_name: "", user_id: null };
-  handleExpandClick = () => {
-    this.setState(state => ({ expanded: !state.expanded }));
-  };
-  handleChange = (e) => {
-    this.setState({[e.target.name]: e.target.value});
-  }
-  handleCommentSubmit = e => {
-    e.preventDefault();
-    const user = userService.getUser();
-    let userProjectsCopy = {...this.props.userProjects};
-    console.log(userProjectsCopy)
-    console.log(e.target.id)
-    let projectCopy = { ...userProjectsCopy.projects[e.target.id] };
-    console.log( projectCopy )
-    if (this.state.comment.length > 0) {
-      projectCopy.comments.push({
-        comment: this.state.comment,
-        user_name: user.user_name,
-        user_id: user._id
-      });
-      postService.addComment({
-        comment: this.state.comment,
-        user_name: user.user_name,
-        user_id: user._id,
-        userInfo: user,
-        projectInfo: projectCopy
-      });
+    card: {
+      maxWidth: "90%",
+      margin: "20px 10%"
+    },
+    media: {
+      height: 0,
+      paddingTop: "56.25%" // 16:9
+    },
+    actions: {
+      display: "flex"
+    },
+    expand: {
+      transform: "rotate(0deg)",
+      marginLeft: "auto",
+      transition: theme.transitions.create("transform", {
+        duration: theme.transitions.duration.shortest
+      })
+    },
+    expandOpen: {
+      transform: "rotate(180deg)"
+    },
+    avatar: {
+      backgroundColor: red[500]
+    },
+    textField: {
+      marginLeft: theme.spacing.unit,
+      marginRight: theme.spacing.unit,
+      width: "60vw"
     }
-    this.props.handleCommentSubmitOnProfile(userProjectsCopy);
-    this.setState({ comment: "" });
+  });
+class UserSearchedProfile extends Component {
+  state = {
+    queryData: null
   };
+
   async componentDidMount() {
-    const projects = await postService.userIndex();
-    this.props.handleUpdateUserProjects(projects);
+    const users = await this.props.users;
+    const queryData = users.filter(u => {
+      return u.user_name === this.props.match.params.username;
+    });
+    this.setState({ queryData });
+    console.log(this.state.queryData);
   }
+  
   render() {
     const { classes } = this.props;
     return (
-      <>
-        <div style={{ height: "100px" }} />
-        {this.props.userProjects ? (
-          this.props.userProjects.projects.map((p, i) => (
+      <div style={{ paddingTop: "200px" }}>
+        {this.state.queryData ? (
+        //   <p>{this.state.queryData[0].user_name}</p>
+          this.state.queryData[0].projects.map((p, i) => (
             <Card className={classes.card} key={`card${i}`}>
               <CardHeader
                 avatar={
                   <Avatar aria-label="Recipe" className={classes.avatar}>
-                    {this.props.userProjects.first_name[0]}
+                    {this.state.queryData[0].first_name[0]}
                   </Avatar>
                 }
-                action={
-                  <>
-                    <IconButton
-                      onClick={() => this.props.handleProjectDelete(p)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                    <Link
-                      to={`/${this.props.userProjects.user_name}/edit-profile/${
-                        p._id
-                      }`}
-                    >
-                      <IconButton>
-                        <EditIcon />
-                      </IconButton>
-                    </Link>
-                  </>
-                }
-                title={this.props.userProjects.user_name}
+            
+                title={this.state.queryData[0].user_name}
                 subheader={p.createdAt}
               />
               <iframe title={`frameTitle${i}`} key={`frame${i}`} src={p.url} />
@@ -140,7 +98,7 @@ class ProfilePage extends Component {
                 {p.caption ? (
                   <Typography component="p">
                     <span style={{ fontWeight: "900" }}>
-                      {this.props.userProjects.user_name}:&nbsp;{" "}
+                      {this.state.queryData[0].user_name}:&nbsp;{" "}
                     </span>
                     {p.caption}
                   </Typography>
@@ -150,7 +108,7 @@ class ProfilePage extends Component {
               </CardContent>
               <Route
                 exact
-                path={`/:${this.props.userProjects.user_name}/edit-profile/:${
+                path={`/:${this.state.queryData[0].user_name}/edit-profile/:${
                   p._id
                 }`}
                 render={({ history }) => (
@@ -256,15 +214,11 @@ class ProfilePage extends Component {
             </Card>
           ))
         ) : (
-          <img src="./images/loading3.gif" alt="" />
+          <p />
         )}
-      </>
+      </div>
     );
   }
 }
 
-ProfilePage.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-export default withStyles(styles)(ProfilePage);
+export default withStyles(styles)(UserSearchedProfile);

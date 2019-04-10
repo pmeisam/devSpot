@@ -9,6 +9,7 @@ import NavBar from "../../components/Navbar/Navbar";
 import HomePage from "../HomePage/HomePage";
 import ProfilePage from "../ProfilePage/ProfilePage";
 import CreatePostPage from "../CreatePostPage/CreatePostPage";
+import UserSearchedProfile from '../UserSearchedProfile/UserSearchedProfile'
 import "./App.css";
 
 class App extends Component {
@@ -149,6 +150,20 @@ class App extends Component {
                     <CreatePostPage
                       history={history}
                       user={userService.getUser()}
+                    />
+                  ) : (
+                    <Redirect to="/login" />
+                  )
+                }
+              />
+              <Route
+                exact
+                path="/profile/:username"
+                render={( props ) =>
+                  userService.getUser() ? (
+                    <UserSearchedProfile
+                      {...props}
+                      users={userService.getAllUsers()}
                     />
                   ) : (
                     <Redirect to="/login" />

@@ -15,8 +15,8 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
-// import InputBase from "@material-ui/core/InputBase";
-// import Home from "@material-ui/icons/Home";
+import InputBase from "@material-ui/core/InputBase";
+import SearchIcon from '@material-ui/icons/Search';
 
 const styles = theme => ({
   root: {
@@ -201,7 +201,18 @@ class PrimarySearchAppBar extends React.Component {
                 devSpot
               </Link>
             </Typography>
-           
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+              />
+            </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <IconButton color="inherit">
