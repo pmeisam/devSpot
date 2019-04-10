@@ -41,7 +41,6 @@ class EditProject extends Component {
           margin="normal"
           variant="outlined"
           placeholder="Project's URL..."
-          className="form-control"
           onChange={this.handleChange}
           placeholder="URL"
           required
@@ -54,7 +53,6 @@ class EditProject extends Component {
           required
           style={{width: '75vw'}}
           placeholder="Description"
-          className="form-control"
           margin="normal"
           variant="outlined"
           label="Description"
@@ -71,12 +69,11 @@ class EditProject extends Component {
             size="large"
             variant="outlined"
             color="primary"
-            className="btn btn-primary"
             type="submit"
           >
             Done
           </Button>
-          &nbsp;&nbps;&nbsp;
+          &nbsp;&nbsp;&nbsp;
           <Link to={`/${userService.getUser().user_name}`}>Cancel</Link>
         </div>
       </form>

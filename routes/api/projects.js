@@ -17,7 +17,7 @@ router.post('/updateproject', projectsCtrl.updateProject);
 
 
 function checkAuth(req, res, next) {
-//   console.log("api req.user: ", req.user);
+  console.log("api req.user: ", req.user);
   if (req.user) {
     // console.log("api req.user: ", req.user);
     return next();

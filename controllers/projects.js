@@ -13,6 +13,7 @@ module.exports = {
 };
 
 async function create(req, res) {
+  await console.log('inside create function')
   const project = new Project(req.body);
   try {
     User.findOne({ _id: project.user },  function(err, user) {

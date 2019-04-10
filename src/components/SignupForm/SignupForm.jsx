@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import userService from "../../utils/userService";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 
 class SignupForm extends Component {
   state = {
@@ -47,77 +49,97 @@ class SignupForm extends Component {
   render() {
     return (
       <div className="container">
-        <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <label for="exampleInputPassword1">Please enter your first name</label>
-          <input
-            className="form-control"
+        <form
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center"
+          }}
+          onSubmit={this.handleSubmit}
+        >
+          <TextField
+            required
+            style={{ width: "50vw" }}
+            label="First Name"
+            margin="normal"
+            variant="outlined"
             type="text"
             placeholder="First Name"
             value={this.state.first_name}
             name="first_name"
             onChange={this.handleChange}
           />
-          </div>
-          <div className="form-group">
-            <label for="exampleInputPassword1">Please enter your last name</label>
-          <input
-            className="form-control"
+          <TextField
+            required
+            style={{ width: "50vw" }}
+            label="Last Name"
+            margin="normal"
+            variant="outlined"
             type="text"
             placeholder="Last Name"
             value={this.state.last_name}
             name="last_name"
             onChange={this.handleChange}
           />
-          </div>
-          <div className="form-group">
-            <label for="exampleInputPassword1">Please enter a user name</label>
-          <input
-            className="form-control"
+          <TextField
+            required
+            style={{ width: "50vw" }}
+            label="User Name"
+            margin="normal"
+            variant="outlined"
             type="text"
             placeholder="User Name"
             value={this.state.user_name}
             name="user_name"
             onChange={this.handleChange}
           />
-          </div>
-          <div className="form-group">
-            <label for="exampleInputPassword1">Please enter youe mail</label>
-          <input
+          <TextField
+            required
+            style={{ width: "50vw" }}
+            label="Email"
+            margin="normal"
+            variant="outlined"
             type="email"
-            className="form-control"
             placeholder="Email"
             value={this.state.email}
             name="email"
             onChange={this.handleChange}
           />
-          </div>
-          <div className="form-group">
-            <label for="exampleInputPassword1">Password</label>
-          <input
+          <TextField
+            required
+            style={{ width: "50vw" }}
+            label="Password"
+            margin="normal"
+            variant="outlined"
             type="password"
-            className="form-control"
             placeholder="Password"
             value={this.state.password}
             name="password"
             onChange={this.handleChange}
           />
-          </div>
-          <div className="form-group">
-            <label for="exampleInputPassword1">Confirm password</label>
-          <input
-            className="form-control"
+          <TextField
+            required
+            style={{ width: "50vw" }}
+            label="Confirm Password"
+            margin="normal"
+            variant="outlined"
             type="password"
             placeholder="Confirm Password"
             value={this.state.passwordConf}
             name="passwordConf"
             onChange={this.handleChange}
-          /></div>
-          <button className="btn btn-primary" disabled={this.isFormInvalid()}>
+          />
+          <div>
+          <Button
+            disabled={this.isFormInvalid()}
+            size="large"
+            variant="outlined"
+            color="primary"
+          >
             Sign Up
-          </button>
+          </Button>
           &nbsp;&nbsp;
-          <Link to="/">Cancel</Link>
+          <Link to="/">Cancel</Link></div>
         </form>
       </div>
     );
