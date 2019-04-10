@@ -1,14 +1,26 @@
-.frame {
-    width: 80vw;
-    height: 400px;
-    border: 5px ridge darkgray;
-    height: 70vh;
+.sideNav {
+  dipslay: none;
 }
-.cmntbtn {
-    height: 56px;
-}
-form {
-    display: flex;
-    justify-content: center;
-    align-items: baseline;
+@media only screen and (min-width: 600px) {
+  .sideNav {
+    grid-area: sideNav;
+    padding-top: 20px;
+    width: 20vw;
+    height: 100vh;
+    position: fixed;
+    background-color: #ac3b61;
+  }
+  main {
+    display: grid;
+    padding-top: 50px;
+    grid-template-areas:
+      "sideNav newsFeed"
+      "sideNav newsFeed"; 
+    grid-template-columns: 1fr 4fr; 
+  }
+
+  .newsFeed {
+    grid-area: newsFeed;
+    /* width: 80vw; */
+  }
 }

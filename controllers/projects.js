@@ -17,7 +17,7 @@ async function create(req, res) {
   const project = new Project(req.body);
   try {
     User.findOne({ _id: project.user },  function(err, user) {
-      user.projects.push(project.id);
+      user.projects.unshift(project.id);
       user.save();
     });
     await project.save();

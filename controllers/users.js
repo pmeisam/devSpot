@@ -4,8 +4,15 @@ const SECRET = process.env.SECRET;
 
 module.exports = {
   signup,
-  login
+  login,
+  getAllUsers
 };
+async function getAllUsers(req, res) {
+  // var modelQuery = req.body.user ? {userName: new RegExp(req.body.username, 'i')} : {};
+  // let sortKey = req.query.sort || 'userName';
+ const users = await User.find({}).populate('projects');
+ res.json(users);
+}
 
 async function signup(req, res) {
   const user = new User(req.body);

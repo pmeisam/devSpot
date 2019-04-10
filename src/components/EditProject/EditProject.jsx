@@ -40,12 +40,10 @@ class EditProject extends Component {
           label="Project's URL"
           margin="normal"
           variant="outlined"
-          placeholder="Project's URL..."
-          onChange={this.handleChange}
-          placeholder="URL"
-          required
+          placeholder="Project's URL"
           type="url"
           name="url"
+          onChange={this.handleChange}
           value={this.state.url}
         />
         <br />
@@ -57,7 +55,6 @@ class EditProject extends Component {
           variant="outlined"
           label="Description"
           onChange={this.handleChange}
-          placeholder="description..."
           name="description"
           cols="30"
           rows="10"

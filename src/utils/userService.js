@@ -19,6 +19,15 @@ function signup(user) {
   //.then((token) => token.token);
 }
 
+function getAllUsers() {
+  const options = {
+    method: 'GET',
+    headers: new Headers({'Content-Type': 'application/json'}),
+    // body: JSON.stringify(userName)
+  }
+  return fetch(BASE_URL + 'users', options).then( res=>res.json() )
+}
+
 function getUser() {
   return tokenService.getUserFromToken();
 }
@@ -45,5 +54,6 @@ export default {
   signup, 
   getUser,
   logout,
-  login
+  login,
+  getAllUsers
 };

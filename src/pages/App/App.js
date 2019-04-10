@@ -14,7 +14,7 @@ import "./App.css";
 class App extends Component {
   constructor() {
     super();
-    this.state = { user: null, projects: null, userProjects: null };
+    this.state = { user: null, projects: null, userProjects: null, users: null };
   }
   handleSignupOrLogin = () => {
     this.setState({ user: userService.getUser() });
