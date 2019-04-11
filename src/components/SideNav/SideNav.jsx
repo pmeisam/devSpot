@@ -18,6 +18,8 @@ class SideNav extends Component {
         const searchData = this.state.users.filter( u =>{
             if(u.user_name.includes(searchedUser)){
                 return u;
+            } else {
+                return 0;
             }
         })
         this.setState({results: searchData})

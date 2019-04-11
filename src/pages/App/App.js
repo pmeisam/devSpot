@@ -10,6 +10,7 @@ import HomePage from "../HomePage/HomePage";
 import ProfilePage from "../ProfilePage/ProfilePage";
 import CreatePostPage from "../CreatePostPage/CreatePostPage";
 import UserSearchedProfile from '../UserSearchedProfile/UserSearchedProfile'
+import socket from '../../socket.js';
 import "./App.css";
 
 class App extends Component {
@@ -18,12 +19,17 @@ class App extends Component {
     this.state = { user: null, projects: null, userProjects: null, users: null };
   }
   handleSignupOrLogin = () => {
-    this.setState({ user: userService.getUser() });
+    const user = userService.getUser();
+    if (user) {
+      socket.getActive();
+      this.setState({user});
+    }
   };
 
   handleLogout = () => {
+    socket.logout();
     userService.logout();
-    this.setState({ user: null });
+    this.setState({user: null});
   };
   handleUpdateProjects = projects => {
     this.setState({ projects });
@@ -107,7 +113,11 @@ class App extends Component {
   };
 
   async componentDidMount() {
+    socket.registerApp(this);
     const user = userService.getUser();
+    if(user) {
+      socket.getActive();
+    }
     const projects = await postService.index();
     const userProjects = await postService.userIndex();
     this.setState({ user, projects, userProjects });

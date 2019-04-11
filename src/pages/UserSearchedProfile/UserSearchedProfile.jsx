@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import userService from "../../utils/userService";
-import { Route, Link } from "react-router-dom";
-import postService from "../../utils/postService";
+import { Route } from "react-router-dom";
+// import postService from "../../utils/postService";
 import EditProject from "../../components/EditProject/EditProject";
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
-import PropTypes from "prop-types";
+// import DeleteIcon from "@material-ui/icons/Delete";
+// import EditIcon from "@material-ui/icons/Edit";
+// import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import classnames from "classnames";
 import Card from "@material-ui/core/Card";
