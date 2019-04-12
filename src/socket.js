@@ -13,9 +13,16 @@ function getActive() {
 function logout() {
   socket.emit("logout", tokenService.getToken());
 }
+function createChat(user){
+  socket.emit('create-chat', {
+    token: tokenService.getToken(),
+    users: user
+  })
+}
 
 export default {
   registerApp,
   logout,
-  getActive
+  getActive,
+  createChat
 };

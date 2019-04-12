@@ -1,7 +1,8 @@
 .searchForm {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
 }
 ul {
-    list-style-type: none;
+  list-style-type: none;
 }

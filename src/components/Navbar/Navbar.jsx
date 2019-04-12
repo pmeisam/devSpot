@@ -180,7 +180,7 @@ class PrimarySearchAppBar extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar style={{backgroundColor: "#123C69", position: 'fixed'}} position="static">
+        <AppBar style={{backgroundColor: "#E85A4F", position: 'fixed'}} position="static">
           <Toolbar>
             <IconButton
               className={classes.menuButton}
@@ -201,18 +201,7 @@ class PrimarySearchAppBar extends React.Component {
                 devSpot
               </Link>
             </Typography>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-              />
-            </div>
+           
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <IconButton color="inherit">

@@ -2,14 +2,15 @@ import React, { Component } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import SignupPage from "../SignupPage/SignupPage";
 import LoginPage from "../LoginPage/LoginPage";
-import userService from "../../utils/userService";
-import postService from "../../utils/postService";
+import ChatPage from '../ChatPage/ChatPage';
 import BaseView from "../../components/BaseView/BaseView";
 import NavBar from "../../components/Navbar/Navbar";
 import HomePage from "../HomePage/HomePage";
 import ProfilePage from "../ProfilePage/ProfilePage";
 import CreatePostPage from "../CreatePostPage/CreatePostPage";
 import UserSearchedProfile from '../UserSearchedProfile/UserSearchedProfile'
+import userService from "../../utils/userService";
+import postService from "../../utils/postService";
 import socket from '../../socket.js';
 import "./App.css";
 
@@ -42,10 +43,13 @@ class App extends Component {
     let userCopy = { ...this.state.user };
     projectsCopy.forEach(async p => {
       if (p._id === projectId) {
-        if (p.likes.includes(userCopy.email)) {
-          p.likes.splice(userCopy.email, 1);
+        if (p.likes.includes(userCopy._id)) {
+          // p.likes.splice(userCopy._id, 1);
+          p.likes = p.likes.filter(a=>{
+            return a !== userCopy._id
+          })
         } else {
-          p.likes.push(userCopy.email);
+          p.likes.push(userCopy._id);
         }
         await postService.addLike({ projectId: p._id, userCopy });
       }
@@ -57,10 +61,12 @@ class App extends Component {
     let userCopy = { ...this.state.user };
     projectsCopy.projects.forEach(async p => {
       if (p._id === projectId) {
-        if (p.likes.includes(userCopy.email)) {
-          p.likes.splice(userCopy.email, 1);
+        if (p.likes.includes(userCopy._id)) {
+          p.likes = p.likes.filter(a=>{
+            return a !== userCopy._id
+          })
         } else {
-          p.likes.push(userCopy.email);
+          p.likes.push(userCopy._id);
         }
         await postService.addLike({ projectId: p._id, userCopy });
       }
@@ -172,6 +178,20 @@ class App extends Component {
                 render={( props ) =>
                   userService.getUser() ? (
                     <UserSearchedProfile
+                      {...props}
+                      users={userService.getAllUsers()}
+                    />
+                  ) : (
+                    <Redirect to="/login" />
+                  )
+                }
+              />
+              <Route
+                exact
+                path="/chat/:userName/:loggedInUser"
+                render={( props ) =>
+                  userService.getUser() ? (
+                    <ChatPage
                       {...props}
                       users={userService.getAllUsers()}
                     />

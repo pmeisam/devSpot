@@ -20,6 +20,7 @@ app.use(express.static(path.join(__dirname, "build")));
 // Put API routes here, before the "catch all" route
 app.use("/api/users", require("./routes/api/users"));
 app.use("/api/projects", require("./routes/api/projects"));
+app.use("/api/chats", require("./routes/api/chats"));
 
 app.get("/*", function(req, res) {
   res.sendFile(path.join(__dirname, "build", "index.html"));

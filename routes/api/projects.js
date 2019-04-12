@@ -6,18 +6,17 @@ const projectsCtrl = require("../../controllers/projects");
 
 /*---------- Protected Routes ----------*/
 router.use(require("../../config/auth"));
-router.post("/create-post", projectsCtrl.create);
+router.post("/create-post", checkAuth, projectsCtrl.create);
 router.get("/", checkAuth, projectsCtrl.show);
 router.get("/:username", checkAuth, projectsCtrl.userProjects);
 router.post("/likebtn", projectsCtrl.likeProject);
 router.post("/createcomment", projectsCtrl.addcommentOnProject);
 router.post("/deletecomment", projectsCtrl.deleteComment);
 router.post("/deleteproject", projectsCtrl.deleteProject);
-router.post('/updateproject', projectsCtrl.updateProject);
-
+router.post("/updateproject", projectsCtrl.updateProject);
 
 function checkAuth(req, res, next) {
-  console.log("api req.user: ", req.user);
+  // console.log("api req.user: ", req.user);
   if (req.user) {
     // console.log("api req.user: ", req.user);
     return next();

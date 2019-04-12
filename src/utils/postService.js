@@ -10,13 +10,16 @@ export default {
   addComment,
   removeComment,
   deleteProject,
-  updateProject,
+  updateProject
 };
 
 function create_post(project) {
   return fetch(BASE_URL + "create-post", {
     method: "POST",
-    headers: new Headers({ "Content-Type": "application/json" }),
+    headers: new Headers({
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + tokenService.getToken()
+    }),
     body: JSON.stringify(project)
   }).then(res => {
     if (res.ok) return res.json();
@@ -65,26 +68,26 @@ function addComment(projectId) {
 function removeComment(project) {
   const options = {
     method: "POST",
-    headers: new Headers({'Content-Type': 'application/json'}),
+    headers: new Headers({ "Content-Type": "application/json" }),
     body: JSON.stringify(project)
   };
-  return fetch(BASE_URL + 'deletecomment', options).then(res => res.json());
+  return fetch(BASE_URL + "deletecomment", options).then(res => res.json());
 }
 
 function deleteProject(project) {
   const options = {
     method: "POST",
-    headers: new Headers({'Content-Type': 'application/json'}),
+    headers: new Headers({ "Content-Type": "application/json" }),
     body: JSON.stringify(project)
-  }
-  return fetch(BASE_URL + 'deleteproject', options).then(res=>res.json())
+  };
+  return fetch(BASE_URL + "deleteproject", options).then(res => res.json());
 }
 
 function updateProject(project) {
   const options = {
     method: "POST",
-    headers: new Headers({'Content-Type': 'application/json'}),
+    headers: new Headers({ "Content-Type": "application/json" }),
     body: JSON.stringify(project)
-  }
-  return fetch(BASE_URL + 'updateproject', options).then(res => res.json);
+  };
+  return fetch(BASE_URL + "updateproject", options).then(res => res.json);
 }

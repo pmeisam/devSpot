@@ -21,7 +21,11 @@ const userSchema = new mongoose.Schema(
     bio: String,
     notifications: [String],
     followers: [String],
-    following: [String]
+    following: [String],
+    chats: [{
+      type: Schema.Types.ObjectId,
+      ref: "Chat"
+    }],
   },
   {
     timestamps: true
