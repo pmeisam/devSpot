@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { TextField } from "@material-ui/core";
 import { Button } from "@material-ui/core";
 import userService from "../../utils/userService";
-import socket from '../../socket';
+import socket from "../../socket";
 
 class ChatPage extends Component {
   state = {
@@ -10,34 +10,49 @@ class ChatPage extends Component {
     user: null,
     chatId: null,
     messages: [],
+    userName: null
   };
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault();
     try {
       socket.sendMessage({
         content: this.state.message,
         id: this.props.match.params.chatId
       });
-      
     } catch (err) {
-      console.log('there was an error!')
+      console.log("there was an error!");
     }
-  }
-  handleChange = (evt) => {
-    this.setState({[evt.target.name]: evt.target.value});
-  }
+    this.setState({ message: "" });
+  };
+  handleChange = evt => {
+    this.setState({ [evt.target.name]: evt.target.value });
+  };
   componentDidMount() {
+    socket.registerApp(this);
+    if (this.state.chat) {
+      this.setState({ messages: this.state.chat.messages });
+    }
+    console.log(this.state.messages);
     const user = userService.getUser();
-    this.setState({user});
-    this.setState({chatId: this.props.match.params.chatId})
-    // this.setState({messages: })
+    const userName = userService.getUser().user_name;
+    this.setState({ user });
+    this.setState({ userName });
+    this.setState({ chatId: this.props.match.params.chatId });
   }
   render() {
+    console.log(this.state.messages);
     return (
-      <div style={{ paddingTop: "100px" }}>
-        <div>
-          {this.state.message}
-        </div>
+      <div style={{ paddingTop: "150px" }}>
+        {this.state.messages ? 
+          this.state.messages.map(m => (
+            <p key={m._id}>
+              <span>user</span>
+              {m.content}
+            </p>
+          ))
+         : (
+          <p />
+        )}
         <form style={{ bottom: 0, position: "fixed", margin: "0 auto" }}>
           <TextField
             required
@@ -53,6 +68,7 @@ class ChatPage extends Component {
           />
           <Button
             onClick={this.handleSubmit}
+            disabled={this.props.message === ""}
             size="large"
             variant="outlined"
             color="secondary"

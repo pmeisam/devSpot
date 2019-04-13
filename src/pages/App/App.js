@@ -119,7 +119,6 @@ class App extends Component {
   };
 
   async componentDidMount() {
-    socket.registerApp(this);
     const user = userService.getUser();
     if(user) {
       socket.getActive();

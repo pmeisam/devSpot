@@ -30,9 +30,7 @@ function init(http) {
         socket.join(chat._id, function() {
           io.to(chat._id).emit('new-message', chat);
         });
-
       } else {
-        
         socket.join(`unauthorized-user-${code}`, function() {
           io.to(`unauthorized-user`).emit('unauthorized-user');
         });
