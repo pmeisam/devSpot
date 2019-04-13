@@ -23,7 +23,8 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import MailIcon from "@material-ui/icons/Mail";
-import socket from '../../socket';
+// import socket from "../../socket";
+import chatService from "../../utils/chatService";
 
 const styles = theme => ({
   card: {
@@ -58,7 +59,9 @@ const styles = theme => ({
 });
 class UserSearchedProfile extends Component {
   state = {
-    queryData: null
+    queryData: null,
+    chat: null,
+    chatId: null,
   };
 
   async componentDidMount() {
@@ -67,9 +70,15 @@ class UserSearchedProfile extends Component {
       return u.user_name === this.props.match.params.username;
     });
     this.setState({ queryData });
-    console.log(this.state.queryData);
+    // const searchedUser = this.state.queryData[0].chats;
+    // const loggedInUser = await userService.getUser().chats;
+    
+    const chat = await chatService.createChat([
+      this.state.queryData,
+      userService.getUser()
+    ]);
+    this.setState({ chat: chat, chatId: chat._id });
   }
-
   render() {
     const { classes } = this.props;
     return (
@@ -89,10 +98,8 @@ class UserSearchedProfile extends Component {
                 subheader={this.state.queryData[0].user_name}
                 action={
                   <Link
-                    to={`/chat/${this.state.queryData[0].user_name}/${
-                      userService.getUser().user_name
-                    }}`}
-                    onClick={() => {socket.createChat([this.state.queryData[0]._id, userService.getUser()._id])}}
+                    to={`/chat/${this.state.chatId}`}
+                    onClick={this.handleFindChat}
                   >
                     <IconButton>
                       <MailIcon />

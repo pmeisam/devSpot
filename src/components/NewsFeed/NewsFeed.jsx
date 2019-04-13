@@ -137,7 +137,7 @@ class HomePage extends Component {
                  {/*  <FavoriteIcon
                     onClick={() => this.props.handleLikeButton(p._id)}
                   /> */}
-                  {p.likes.includes(userService.getUser().email) ? (
+                  {p.likes.includes(userService.getUser()._id) ? (
                     <FavoriteIcon
                       color="secondary"
                       onClick={() => this.props.handleLikeButton(p._id)}

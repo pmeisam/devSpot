@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import SearchIcon from "@material-ui/icons/Search";
-import { TextField, Button } from "@material-ui/core";
+import { TextField} from "@material-ui/core";
 import "./SideNav.css";
 import userService from "../../utils/userService";
-// import { InputBase } from "@material-ui/core/InputBase";
 import { Link } from "react-router-dom";
 
 class SideNav extends Component {

@@ -44,10 +44,10 @@ async function userProjects(req, res) {
 
 async function likeProject(req, res) {
   Project.findOne({ _id: req.body.projectId }, async function(err, project) {
-    if (project.likes.includes(req.body.userCopy.email)) {
-      project.likes.splice(req.body.userCopy.email, 1);
+    if (project.likes.includes(req.body.userCopy._id)) {
+      project.likes.splice(req.body.userCopy._id, 1);
     } else {
-      project.likes.push(req.body.userCopy.email);
+      project.likes.push(req.body.userCopy._id);
     }
     project.save();
     res.json(project);

@@ -164,7 +164,7 @@ class ProfilePage extends Component {
               />
               <CardActions className={classes.actions} disableActionSpacing>
                 <IconButton aria-label="Add to favorites">
-                  {p.likes.includes(userService.getUser().email) ? (
+                  {p.likes.includes(userService.getUser()._id) ? (
                     <FavoriteIcon
                       color="secondary"
                       onClick={() => this.props.handleLikeBtnOnProfile(p._id)}

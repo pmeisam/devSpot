@@ -188,7 +188,7 @@ class App extends Component {
               />
               <Route
                 exact
-                path="/chat/:userName/:loggedInUser"
+                path="/chat/:chatId"
                 render={( props ) =>
                   userService.getUser() ? (
                     <ChatPage

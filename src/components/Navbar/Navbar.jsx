@@ -15,8 +15,8 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
-import InputBase from "@material-ui/core/InputBase";
-import SearchIcon from '@material-ui/icons/Search';
+// import InputBase from "@material-ui/core/InputBase";
+// import SearchIcon from '@material-ui/icons/Search';
 
 const styles = theme => ({
   root: {

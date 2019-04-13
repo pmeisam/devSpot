@@ -14,24 +14,29 @@ function init(http) {
   io.on("connection", function(socket) {
     console.log("connected to socket.io");
 
-
-
-    socket.on('create-chat', async function({token, users}){
-      // console.log('users in chat room are: ', users);
+    socket.on('new-message', async function({content, id, token}) {
+      const chat = await Chat.findById(id).populate('users');
       const user = await validateToken(token);
       if (!user) return;
-      const chat = await Chat.findChatOrCreateOne(users)
-      chats[chat._id] = chat;
-      socket.join(chat._id, function(){
-        io.to(chat._id).emit('update-chat', chat);
-      })
-    })
-    socket.on('send-text', async function({token, idx}) {
-      const user = await validateToken(token);
-      if(!user) return;
-      let chat = findChatInMemory(user);
-      io.to(chat._id).emit('update-chat', chat);
-      chat.save();
+      // console.log(chat);
+      const authorized = chat.users.map(u => u.id).includes(user._id);
+      if (authorized) {
+        chat.messages.push({
+          content: content,
+          user: user._id,
+          userName: user.userName,
+        });
+        await chat.save();
+        socket.join(chat._id, function() {
+          io.to(chat._id).emit('new-message', chat);
+        });
+
+      } else {
+        
+        socket.join(`unauthorized-user-${code}`, function() {
+          io.to(`unauthorized-user`).emit('unauthorized-user');
+        });
+      }
     })
 
 
@@ -84,8 +89,10 @@ function validateToken(token) {
   });
 }
 function findChatInMemory(user) {
+  // console.log('chats ', chats)
   let chatsArr = Object.values(chats);
-  console.log(chatsArr);
-  // const chat = chatsArr.find(g => g.users.some(p => p._id == user._id));
-  // return chat;
+  // console.log('chatsArr: ', chatsArr);
+  const chat = chatsArr.find(g => g.users.some(p => p._id == user._id));
+  console.log('chat: ', chat)
+  return chat;
 }
