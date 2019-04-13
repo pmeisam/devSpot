@@ -51,7 +51,7 @@ class ChatPage extends Component {
          : (
           <p />
         )}
-        <form style={{ bottom: 0, position: "fixed", margin: "0 auto" }}>
+        <form onSubmit={this.handleSubmit} style={{ bottom: 0, position: "fixed", margin: "0 auto" }}>
           <TextField
             required
             style={{ width: "70vw" }}
@@ -65,7 +65,7 @@ class ChatPage extends Component {
             onChange={this.handleChange}
           />
           <Button
-            onClick={this.handleSubmit}
+            // onClick={this.handleSubmit}
             disabled={this.props.message === ""}
             size="large"
             variant="outlined"

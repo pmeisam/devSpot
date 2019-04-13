@@ -27,7 +27,7 @@ function init(http) {
         });
         await chat.save();
         socket.join(chat._id, function() {
-          io.to(chat._id).emit("new-message", chat);
+          io.to(chat._id).emit("update-messages", chat);
         });
       } else {
         socket.join(`unauthorized-user`, function() {

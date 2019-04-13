@@ -20,7 +20,7 @@ function sendMessage({content, id}) {
 
 
 
-socket.on('new-message', function(chat){
+socket.on('update-messages', function(chat){
   ChatPage.setState({messages: chat.messages})
 })
 
