@@ -14,33 +14,27 @@ function init(http) {
   io.on("connection", function(socket) {
     console.log("connected to socket.io");
 
-    socket.on('new-message', async function({content, id, token}) {
-      const chat = await Chat.findById(id).populate('users');
+    socket.on("new-message", async function({ content, id, token }) {
+      const chat = await Chat.findById(id).populate("users");
       const user = await validateToken(token);
       if (!user) return;
-      // console.log(chat);
       const authorized = chat.users.map(u => u.id).includes(user._id);
       if (authorized) {
         chat.messages.push({
           content: content,
           user: user._id,
-          userName: user.userName,
+          userName: user.user_name
         });
         await chat.save();
         socket.join(chat._id, function() {
-          io.to(chat._id).emit('new-message', chat);
+          io.to(chat._id).emit("new-message", chat);
         });
       } else {
-        socket.join(`unauthorized-user-${code}`, function() {
-          io.to(`unauthorized-user`).emit('unauthorized-user');
+        socket.join(`unauthorized-user`, function() {
+          io.to(`unauthorized-user`).emit("unauthorized-user");
         });
       }
-    })
-
-
-
-
-
+    });
 
     socket.on("get-active", async function(token) {
       const user = await validateToken(token);
@@ -91,6 +85,6 @@ function findChatInMemory(user) {
   let chatsArr = Object.values(chats);
   // console.log('chatsArr: ', chatsArr);
   const chat = chatsArr.find(g => g.users.some(p => p._id == user._id));
-  console.log('chat: ', chat)
+  console.log("chat: ", chat);
   return chat;
 }

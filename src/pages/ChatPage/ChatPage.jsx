@@ -34,9 +34,7 @@ class ChatPage extends Component {
     }
     console.log(this.state.messages);
     const user = userService.getUser();
-    const userName = userService.getUser().user_name;
     this.setState({ user });
-    this.setState({ userName });
     this.setState({ chatId: this.props.match.params.chatId });
   }
   render() {
@@ -46,7 +44,7 @@ class ChatPage extends Component {
         {this.state.messages ? 
           this.state.messages.map(m => (
             <p key={m._id}>
-              <span>user</span>
+              <span>{m.userName}:&nbsp;&nbsp;</span>
               {m.content}
             </p>
           ))

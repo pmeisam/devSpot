@@ -2,6 +2,7 @@ import tokenService from "./utils/tokenService";
 const socket = window.io();
 let ChatPage = null;
 
+
 function registerApp(app) {
   ChatPage = app;
 }
