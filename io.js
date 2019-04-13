@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 const Chat = require("./models/chat");
 let io;
 
-const chats = {};
 
 module.exports = {
   init,
@@ -27,7 +26,7 @@ function init(http) {
         });
         await chat.save();
         socket.join(chat._id, function() {
-          io.to(chat._id).emit("update-messages", chat);
+          io.to(chat._id).emit("new-message", chat);
         });
       } else {
         socket.join(`unauthorized-user`, function() {
@@ -36,35 +35,6 @@ function init(http) {
       }
     });
 
-    socket.on("get-active", async function(token) {
-      const user = await validateToken(token);
-      if (!user) return;
-      let chat = findChatInMemory(user);
-      // Active chat not in memory, check db just in case
-      // if (!chat) chat = await Chat.getActiveForUser(user);
-      if (chat) {
-        socket.join(chat._id, function() {
-          chats[chat._id] = chat;
-          io.to(chat._id).emit("update-chat", chat);
-        });
-      }
-    });
-    socket.on("logout", async function(token) {
-      const user = await validateToken(token);
-      if (!user) return;
-      let chat = findChatInMemory(user);
-      if (!chat) chat = await Chat.getActiveForUser(user);
-      if (chat) {
-        socket.leave(chat._id, function() {
-          const player = chat.players.find(p => p.playerId.equals(user._id));
-          chat.players.remove(player._id);
-          if (!chat.players.length) {
-            delete chats[chat._id];
-            Chat.findByIdAndDelete(chat._id).exec();
-          }
-        });
-      }
-    });
   });
 }
 
@@ -79,12 +49,4 @@ function validateToken(token) {
       resolve(decoded.user);
     });
   });
-}
-function findChatInMemory(user) {
-  // console.log('chats ', chats)
-  let chatsArr = Object.values(chats);
-  // console.log('chatsArr: ', chatsArr);
-  const chat = chatsArr.find(g => g.users.some(p => p._id == user._id));
-  console.log("chat: ", chat);
-  return chat;
 }

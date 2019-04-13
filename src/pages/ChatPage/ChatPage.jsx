@@ -12,6 +12,9 @@ class ChatPage extends Component {
     messages: [],
     userName: null
   };
+  scrollToBottom = () => {
+    this.el.scrollIntoView({ behavior: 'smooth' });
+  }
   handleSubmit = e => {
     e.preventDefault();
     try {
@@ -28,15 +31,19 @@ class ChatPage extends Component {
     this.setState({ [evt.target.name]: evt.target.value });
   };
   componentDidMount() {
+    this.scrollToBottom()
     socket.registerApp(this);
     if (this.state.chat) {
       this.setState({ messages: this.state.chat.messages });
     }
-    console.log(this.state.messages);
     const user = userService.getUser();
     this.setState({ user });
     this.setState({ chatId: this.props.match.params.chatId });
   }
+  componentDidUpdate () {
+    this.scrollToBottom()
+  }
+ 
   render() {
     console.log(this.state.messages);
     return (
@@ -51,7 +58,7 @@ class ChatPage extends Component {
          : (
           <p />
         )}
-        <form onSubmit={this.handleSubmit} style={{ bottom: 0, position: "fixed", margin: "0 auto" }}>
+        <form onSubmit={this.handleSubmit} style={{ bottom: 0, margin: "100px auto 0 auto" }}>
           <TextField
             required
             style={{ width: "70vw" }}
@@ -63,6 +70,7 @@ class ChatPage extends Component {
             name="message"
             value={this.state.message}
             onChange={this.handleChange}
+            autoComplete='off'
           />
           <Button
             // onClick={this.handleSubmit}
@@ -70,9 +78,12 @@ class ChatPage extends Component {
             size="large"
             variant="outlined"
             color="secondary"
+            type='submit'
+            style={{height: '57px'}}
           >
             Send
           </Button>
+          <div ref={el => { this.el = el; }} />
         </form>
       </div>
     );

@@ -6,12 +6,8 @@ let ChatPage = null;
 function registerApp(app) {
   ChatPage = app;
 }
-function getActive() {
-  socket.emit("get-active", tokenService.getToken());
-}
-function logout() {
-  socket.emit("logout", tokenService.getToken());
-}
+
+
 
 function sendMessage({content, id}) {
   const token = tokenService.getToken();
@@ -20,13 +16,11 @@ function sendMessage({content, id}) {
 
 
 
-socket.on('update-messages', function(chat){
+socket.on('new-message', function(chat){
   ChatPage.setState({messages: chat.messages})
 })
 
 export default {
   registerApp,
-  logout,
-  getActive,
   sendMessage
 };

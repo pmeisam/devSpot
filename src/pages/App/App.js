@@ -11,7 +11,6 @@ import CreatePostPage from "../CreatePostPage/CreatePostPage";
 import UserSearchedProfile from '../UserSearchedProfile/UserSearchedProfile'
 import userService from "../../utils/userService";
 import postService from "../../utils/postService";
-import socket from '../../socket.js';
 import "./App.css";
 
 class App extends Component {
@@ -21,14 +20,10 @@ class App extends Component {
   }
   handleSignupOrLogin = () => {
     const user = userService.getUser();
-    if (user) {
-      socket.getActive();
-      this.setState({user});
-    }
+    this.setState({user});
   };
 
   handleLogout = () => {
-    socket.logout();
     userService.logout();
     this.setState({user: null});
   };
@@ -44,7 +39,6 @@ class App extends Component {
     projectsCopy.forEach(async p => {
       if (p._id === projectId) {
         if (p.likes.includes(userCopy._id)) {
-          // p.likes.splice(userCopy._id, 1);
           p.likes = p.likes.filter(a=>{
             return a !== userCopy._id
           })
@@ -88,7 +82,6 @@ class App extends Component {
     const commentsCopy = projectCopy[0].comments.filter((c) => {
       return c._id !== comment._id
     });
-    console.log(commentsCopy)
     projectCopy[0].comments = commentsCopy;
     postService.removeComment({ project, comment });
     this.setState({ projects: projectsCopy });
@@ -97,9 +90,7 @@ class App extends Component {
   handleCommentDeleteOnProfile = (project, comment) => {
     let userProjects = {...this.state.userProjects};
     const projectCopy = userProjects.projects.filter( p => { return p._id === project._id} );
-    console.log(projectCopy)
     const commentsCopy = projectCopy[0].comments.filter( c => c._id !== comment._id)
-    console.log(commentsCopy)
     projectCopy[0].comments = commentsCopy;
     postService.removeComment({project, comment});
     this.setState({userProjects: userProjects});
@@ -120,9 +111,6 @@ class App extends Component {
 
   async componentDidMount() {
     const user = userService.getUser();
-    if(user) {
-      socket.getActive();
-    }
     const projects = await postService.index();
     const userProjects = await postService.userIndex();
     this.setState({ user, projects, userProjects });
