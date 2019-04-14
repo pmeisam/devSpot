@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import userService from "../../utils/userService";
 import { Route } from "react-router-dom";
-// import postService from "../../utils/postService";
+import postService from "../../utils/postService";
 import EditProject from "../../components/EditProject/EditProject";
 // import DeleteIcon from "@material-ui/icons/Delete";
 // import EditIcon from "@material-ui/icons/Edit";
@@ -23,7 +23,6 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import MailIcon from "@material-ui/icons/Mail";
-// import socket from "../../socket";
 import chatService from "../../utils/chatService";
 
 const styles = theme => ({
@@ -62,22 +61,51 @@ class UserSearchedProfile extends Component {
     queryData: null,
     chat: null,
     chatId: null,
+    expanded: false,
+    comment: '',
   };
+  handleCommentSubmit = e => {
+    e.preventDefault();
+    const user = userService.getUser();
+    let projectsCopy = [...this.props.projects];
+    let projectCopy = { ...projectsCopy[e.target.id] };
+    if (this.state.comment.length > 0) {
+      projectCopy.comments.push({
+        comment: this.state.comment,
+        user_name: user.user_name,
+        user_id: user._id
+      });
+      postService.addComment({
+        comment: this.state.comment,
+        user_name: user.user_name,
+        user_id: user._id,
+        userInfo: user,
+        projectInfo: projectCopy
+      });
+    }
+    this.props.handleCommentSubmit(projectsCopy);
+    this.setState({ comment: "" });
+  };
+  handleExpandClick = () => {
+    this.setState(state => ({ expanded: !state.expanded }));
+  };
+  handleChange = evt => {
+    this.setState({[evt.target.name]: evt.target.value});
+  }
 
   async componentDidMount() {
     const users = await this.props.users;
     const queryData = users.filter(u => {
       return u.user_name === this.props.match.params.username;
     });
-    this.setState({ queryData });
+    this.setState({queryData})
     // const searchedUser = this.state.queryData[0].chats;
     // const loggedInUser = await userService.getUser().chats;
-    
     const chat = await chatService.createChat([
       this.state.queryData,
       userService.getUser()
     ]);
-    this.setState({ chat: chat, chatId: chat._id });
+    this.setState({ chat: chat, chatId: chat._id});
   }
   render() {
     const { classes } = this.props;
@@ -162,17 +190,17 @@ class UserSearchedProfile extends Component {
                   />
                   <CardActions className={classes.actions} disableActionSpacing>
                     <IconButton aria-label="Add to favorites">
-                      {p.likes.includes(userService.getUser().email) ? (
+                      {p.likes.includes(userService.getUser()._id) ? (
                         <FavoriteIcon
                           color="secondary"
                           onClick={() =>
-                            this.props.handleLikeBtnOnProfile(p._id)
+                            this.props.handleLikeButton(p._id)
                           }
                         />
                       ) : (
                         <FavoriteIcon
                           onClick={() =>
-                            this.props.handleLikeBtnOnProfile(p._id)
+                            this.props.handleLikeButton(p._id)
                           }
                         />
                       )}
@@ -204,7 +232,7 @@ class UserSearchedProfile extends Component {
                                   color="inherit"
                                   type="submit"
                                   onClick={() =>
-                                    this.props.handleCommentDeleteOnProfile(
+                                    this.props.handleCommentDelete(
                                       p,
                                       comment
                                     )

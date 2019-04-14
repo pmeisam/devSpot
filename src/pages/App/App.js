@@ -22,7 +22,6 @@ class App extends Component {
     const user = userService.getUser();
     this.setState({user});
   };
-
   handleLogout = () => {
     userService.logout();
     this.setState({user: null});
@@ -166,6 +165,11 @@ class App extends Component {
                   userService.getUser() ? (
                     <UserSearchedProfile
                       {...props}
+                      projects={this.state.projects}
+                      user={userService.getUser()}
+                      handleCommentDelete={this.handleCommentDelete}
+                      handleCommentSubmit={this.handleCommentSubmit}
+                      handleLikeButton={this.handleLikeButton}
                       users={userService.getAllUsers()}
                     />
                   ) : (

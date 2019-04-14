@@ -49,20 +49,21 @@ class ChatPage extends Component {
     console.log(this.state.messages);
     return (
       <div style={{ paddingTop: "150px" }}>
-        <Card style={{width: '70%', margin: '0 auto', padding: '0 40px'}}>
+        <Card style={{width: '80%', height: '80vh', margin: '0 auto', padding: '0 40px'}}>
           {this.state.messages ? (
             this.state.messages.map(m => (
               <p style={{margin: '10px 40px'}} key={m._id}>
                 <span style={{fontWeight: '900'}}>{m.userName}:&nbsp;&nbsp;</span>
                 {m.content}
               </p>
+            
             ))
-          ) : (
+          ): (
             <p />
-          )}
+          )}</Card> 
           <form
             onSubmit={this.handleSubmit}
-            style={{ bottom: 0, margin: "100px auto 0 auto" }}
+            style={{ bottom: 0, display: 'fixed', margin: "0 auto 0 auto" }}
           >
             <TextField
               required
@@ -94,7 +95,7 @@ class ChatPage extends Component {
               }}
             />
           </form>
-        </Card>
+        
       </div>
     );
   }
