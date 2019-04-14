@@ -7,6 +7,7 @@ class HomePage extends Component {
   render() {
     return (
       <main>
+        <SideNav className="sideNav" />
         <NewsFeed
           className='newsFeed'
           projects={this.props.projects}
@@ -17,7 +18,6 @@ class HomePage extends Component {
           handleUpdateProjects={this.props.handleUpdateProjects}
           handleCommentDelete={this.props.handleCommentDelete}
         />
-        <SideNav className="sideNav" />
       </main>
     );
   }

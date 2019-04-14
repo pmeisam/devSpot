@@ -139,7 +139,7 @@ function ButtonBases(props) {
           </Link>
         </ButtonBase>
       ))}
-      <h1>devSpot</h1>
+      <h1 style={{color: '#8ee4af'}}>devSpot</h1>
     </div>
   );
 }

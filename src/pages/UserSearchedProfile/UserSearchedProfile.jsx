@@ -25,7 +25,8 @@ import chatService from "../../utils/chatService";
 const styles = theme => ({
   card: {
     maxWidth: "90%",
-    margin: "20px 10%"
+    margin: "20px 10%",
+    backgroundColor: '#5cdb95'
   },
   media: {
     height: 0,
@@ -115,7 +116,7 @@ class UserSearchedProfile extends Component {
       <div style={{ paddingTop: "100px" }}>
         {this.state.queryData ? (
           <>
-            <Card>
+            <Card className={classes.card}>
               <CardHeader
                 avatar={
                   <Avatar className={classes.avatar}>

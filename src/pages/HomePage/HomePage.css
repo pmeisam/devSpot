@@ -1,27 +1,17 @@
 .sideNav {
-  display: none;
+  width: 70vw;
 }
 @media only screen and (min-width: 600px) {
   .sideNav {
-    grid-area: sideNav;
     padding-top: 20px;
-    width: 25vw;
-    height: 100vh;
-    position: fixed;
-    background-color: #E98074;
+    width: 70vw;
+    background-color: #8ee4af;
     display: block;
+    margin: 30px auto 0 auto;
+    border-radius: 10px;
+    padding: 30px;
   }
   main {
-    display: grid;
     padding-top: 50px;
-    grid-template-areas:
-      "sideNav newsFeed"
-      "sideNav newsFeed";
-    grid-template-columns: 1fr 3fr;
-  }
-
-  .newsFeed {
-    grid-area: newsFeed;
-    /* width: 80vw; */
   }
 }

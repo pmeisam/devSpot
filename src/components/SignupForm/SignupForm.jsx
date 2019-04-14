@@ -53,7 +53,12 @@ class SignupForm extends Component {
           style={{
             display: "flex",
             flexDirection: "column",
-            alignItems: "center"
+            alignItems: "center",
+            backgroundColor: "#5cdb95",
+            width: "70vw",
+            padding: "30px",
+            margin: "0 auto",
+            borderRadius: "15px"
           }}
         >
           <TextField

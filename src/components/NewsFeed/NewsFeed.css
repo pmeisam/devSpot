@@ -1,8 +1,9 @@
-.frame {
+/* .frame {
   width: 95vw;
   height: 50vh;
   border: 5px ridge darkgray;
-}
+  margin: 0 auto;
+} */
 .cmntbtn {
   height: 56px;
 }
@@ -12,9 +13,10 @@ form {
   align-items: baseline;
 }
 @media only screen and (min-width: 600px) {
-  .frame {
-    width: 74vw;
+  /* .frame {
+    width: 95vw;
     height: 60vh;
     border: 5px ridge darkgray;
-  }
+    
+  } */
 }

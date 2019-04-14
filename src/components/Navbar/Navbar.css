@@ -20,3 +20,8 @@ p {
   background-color: #9575cd;
   display: fixed;
 }
+.searchResults {
+  padding-top: 100px;
+  width: 30vw;
+  margin-left: 30vw;
+}

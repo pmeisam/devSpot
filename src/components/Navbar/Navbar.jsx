@@ -15,8 +15,9 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
-// import InputBase from "@material-ui/core/InputBase";
-// import SearchIcon from '@material-ui/icons/Search';
+import InputBase from "@material-ui/core/InputBase";
+import SearchIcon from "@material-ui/icons/Search";
+import userService from "../../utils/userService";
 
 const styles = theme => ({
   root: {
@@ -96,9 +97,30 @@ const styles = theme => ({
 class PrimarySearchAppBar extends React.Component {
   state = {
     anchorEl: null,
-    mobileMoreAnchorEl: null
+    mobileMoreAnchorEl: null,
+    user: "",
+    users: userService.getAllUsers(),
+    results: null,
+    userLoggedIn: null
   };
-
+  handleSearch = evt => {
+    evt.preventDefault();
+  };
+  handleChange = evt => {
+    this.setState({ [evt.target.name]: evt.target.value });
+  };
+  handleSubmit = e => {
+    e.preventDefault();
+    const searchedUser = this.state.user;
+    const searchData = this.state.users.filter(u => {
+      if (u.user_name.includes(searchedUser)) {
+        return u;
+      } else {
+        return 0;
+      }
+    });
+    this.setState({ results: searchData });
+  };
   handleProfileMenuOpen = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
@@ -115,7 +137,17 @@ class PrimarySearchAppBar extends React.Component {
   handleMobileMenuClose = () => {
     this.setState({ mobileMoreAnchorEl: null });
   };
-
+  async componentDidMount() {
+    const users = await userService.getAllUsers(this.state.user);
+    this.setState({ users });
+    const userLoggedIn = users.filter(u => {
+      if (u._id === userService.getUser()._id) {
+        return u;
+      }
+    });
+    this.setState({ userLoggedIn });
+    console.log(this.state.users);
+  }
   render() {
     const { anchorEl, mobileMoreAnchorEl } = this.state;
     const { classes } = this.props;
@@ -154,14 +186,16 @@ class PrimarySearchAppBar extends React.Component {
           </IconButton>
           <p>Messages</p>
         </MenuItem>
-        <Link style={{color: 'black', textDecoration: 'none'}} to="/createpost">
-        <MenuItem onClick={this.handleMobileMenuClose}>
-          <IconButton color="inherit">
-            <AddIcon />
-          </IconButton>
-          <p>Upload project</p>
-          
-        </MenuItem>
+        <Link
+          style={{ color: "black", textDecoration: "none" }}
+          to="/createpost"
+        >
+          <MenuItem onClick={this.handleMobileMenuClose}>
+            <IconButton color="inherit">
+              <AddIcon />
+            </IconButton>
+            <p>Upload project</p>
+          </MenuItem>
         </Link>
         <MenuItem onClick={this.handleMobileMenuClose}>
           <IconButton color="inherit">
@@ -179,8 +213,12 @@ class PrimarySearchAppBar extends React.Component {
     );
 
     return (
+      <>
       <div className={classes.root}>
-        <AppBar style={{backgroundColor: "#E85A4F", position: 'fixed'}} position="static">
+        <AppBar
+          style={{ backgroundColor: "#05386b", position: "fixed" }}
+          position="static"
+        >
           <Toolbar>
             <IconButton
               className={classes.menuButton}
@@ -201,7 +239,7 @@ class PrimarySearchAppBar extends React.Component {
                 devSpot
               </Link>
             </Typography>
-           
+
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <IconButton color="inherit">
@@ -235,9 +273,12 @@ class PrimarySearchAppBar extends React.Component {
             </div>
           </Toolbar>
         </AppBar>
+        
         {renderMenu}
         {renderMobileMenu}
       </div>
+      
+      </>
     );
   }
 }

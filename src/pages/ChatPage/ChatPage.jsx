@@ -47,64 +47,92 @@ class ChatPage extends Component {
   async componentDidUpdate() {
     this.scrollToBottom();
     const allChats = await chatService.getAllChats();
-    const chatRoom = allChats.filter( ch => {
-      if(ch._id === this.props.match.params.chatId){
+    const chatRoom = allChats.filter(ch => {
+      if (ch._id === this.props.match.params.chatId) {
         return ch;
       }
-    })
-    this.setState({chatRoom});
+    });
+    this.setState({ chatRoom });
   }
 
   render() {
     return (
-      <div style={{ paddingTop: "150px" }}>
-        <Card style={{width: '80%', margin: '0 auto', padding: '0 40px'}}>
+      <div style={{ paddingTop: "80px" }}>
+        <Card style={{ width: "80%", margin: "0 auto", padding: "0 40px" }}>
           {this.state.chatRoom ? (
-            this.state.chatRoom[0].messages.map(m => (
-              <p style={{margin: '10px 40px'}} key={m._id}>
-                <span style={{fontWeight: '900'}}>{m.userName}:&nbsp;&nbsp;</span>
-                {m.content}
-              </p>
-            
-            ))
-          ): (
+            this.state.chatRoom[0].messages.map(m =>
+              m.userName === userService.getUser().user_name ? (
+                <p
+                  style={{
+                    margin: "10px 40px",
+                    backgroundColor: "#659dbd",
+                    padding: "4px",
+                    borderRadius: "8px"
+                  }}
+                  key={m._id}
+                >
+                  <span style={{ fontWeight: "900" }}>
+                    {m.userName}:&nbsp;&nbsp;
+                  </span>
+                  {m.content}
+                </p>
+              ) : (
+                <p
+                  style={{
+                    margin: "10px 40px",
+                    backgroundColor: "#8ee4af",
+                    padding: "4px",
+                    borderRadius: "8px",
+                    textAlign: 'right',
+                  }}
+                  key={m._id}
+                >
+                
+                  <span style={{ fontWeight: "900" }}>
+                  {m.userName}:&nbsp;&nbsp;
+                  </span>
+                  {m.content}
+                </p>
+              )
+            )
+          ) : (
             <p />
-          )}</Card> 
-          <form
-            onSubmit={this.handleSubmit}
-            style={{ bottom: 0, display: 'fixed', margin: "0 auto 0 auto" }}
+          )}
+        </Card>
+        <form
+          onSubmit={this.handleSubmit}
+          style={{ bottom: 0, display: "fixed", margin: "0 auto 0 auto", backgroundColor: 'white', width: '80vw' }}
+        >
+          <TextField
+            required
+            style={{ width: "70vw" }}
+            margin="normal"
+            variant="outlined"
+            type="text"
+            label="Message"
+            placeholder="Message"
+            name="message"
+            value={this.state.message}
+            onChange={this.handleChange}
+            autoComplete="off"
+          />
+          <Button
+            // onClick={this.handleSubmit}
+            disabled={this.props.message === ""}
+            size="large"
+            variant="outlined"
+            color="primary"
+            type="submit"
+            style={{ height: "57px" }}
           >
-            <TextField
-              required
-              style={{ width: "70vw" }}
-              margin="normal"
-              variant="outlined"
-              type="text"
-              label="Message"
-              placeholder="Message"
-              name="message"
-              value={this.state.message}
-              onChange={this.handleChange}
-              autoComplete="off"
-            />
-            <Button
-              // onClick={this.handleSubmit}
-              disabled={this.props.message === ""}
-              size="large"
-              variant="outlined"
-              color="secondary"
-              type="submit"
-              style={{ height: "57px" }}
-            >
-              Send
-            </Button>
-            <div
-              ref={el => {
-                this.el = el;
-              }}
-            />
-          </form>
-        
+            Send
+          </Button>
+          <div
+            ref={el => {
+              this.el = el;
+            }}
+          />
+        </form>
       </div>
     );
   }

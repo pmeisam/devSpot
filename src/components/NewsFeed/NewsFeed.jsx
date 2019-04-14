@@ -22,10 +22,9 @@ import Button from "@material-ui/core/Button";
 
 const styles = theme => ({
   card: {
-    maxWidth: "95vw",
-    // maxHeight: '90vh',
-    margin: "20px 5px",
-    backgroundColor: '#EEE2DC'
+    maxWidth: "90%",
+    margin: "20px 10%",
+    backgroundColor: '#5cdb95'
   },
   media: {
     height: 0,
@@ -45,7 +44,7 @@ const styles = theme => ({
     transform: "rotate(180deg)"
   },
   avatar: {
-    backgroundColor: red[500]
+    backgroundColor: '#379683'
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -97,6 +96,7 @@ class HomePage extends Component {
         <div style={{ height: "75px" }} />
         {this.props.projects ? (
           this.props.projects.map((p, i) => (
+            
             <Card className={classes.card} key={`card${i}`}>
               <CardHeader
                 avatar={
@@ -243,7 +243,7 @@ class HomePage extends Component {
             </Card>
           ))
         ) : (
-          <img src="./images/loading3.gif" alt="" />
+          <img style={{margin: '0 auto'}} src="./images/loading.gif" alt="" />
         )}
       </>
     );

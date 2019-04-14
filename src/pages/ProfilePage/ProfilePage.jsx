@@ -95,11 +95,11 @@ class ProfilePage extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <>
+      <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
         <div style={{ height: "100px" }} />
         {this.props.userProjects ? (
           this.props.userProjects.projects.map((p, i) => (
-            <Card className={classes.card} key={`card${i}`}>
+            <Card className={classes.card} key={`card${i}`} style={{backgroundColor: '#5cdb95'}}>
               <CardHeader
                 avatar={
                   <Avatar aria-label="Recipe" className={classes.avatar}>
@@ -256,9 +256,10 @@ class ProfilePage extends Component {
             </Card>
           ))
         ) : (
-          <img src="./images/loading3.gif" alt="" />
+          <img style={{margin: '0 auto'}} src="./images/loading.gif" alt="" />
+
         )}
-      </>
+      </div>
     );
   }
 }

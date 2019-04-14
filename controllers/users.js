@@ -10,7 +10,7 @@ module.exports = {
 async function getAllUsers(req, res) {
   // var modelQuery = req.body.user ? {userName: new RegExp(req.body.username, 'i')} : {};
   // let sortKey = req.query.sort || 'userName';
- const users = await User.find({}).populate('projects');
+ const users = await User.find({}).populate('projects').populate('chats');
  res.json(users);
 }
 
@@ -21,7 +21,6 @@ async function signup(req, res) {
     const token = createJWT(user);
     res.json({ token });
   } catch (err) {
-    // Probably a duplicate email
     res.status(400).json(err);
   }
 }

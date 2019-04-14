@@ -29,7 +29,7 @@ class CreatePost extends Component {
       <div className="container">
         <div style={{ height: "100px" }} />
         <form
-          style={{ display: "flex", flexDirection: "column" }}
+          style={{ display: "flex", flexDirection: "column", backgroundColor: "#5cdb95", padding: '30px', borderRadius: '10px' }}
           onSubmit={this.handleSubmit}
         >
           <TextField
