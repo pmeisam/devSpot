@@ -14,13 +14,12 @@ import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import red from "@material-ui/core/colors/red";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import MailIcon from "@material-ui/icons/Mail";
 import chatService from "../../utils/chatService";
+import CommentIcon from '@material-ui/icons/Comment';
 
 const styles = theme => ({
   card: {
@@ -43,10 +42,10 @@ const styles = theme => ({
     })
   },
   expandOpen: {
-    transform: "rotate(180deg)"
+    transform: "rotate(1440deg)"
   },
   avatar: {
-    backgroundColor: red[500]
+    backgroundColor: '#379683'
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -149,7 +148,7 @@ class UserSearchedProfile extends Component {
                       </Avatar>
                     }
                     title={this.state.queryData[0].user_name}
-                    subheader={p.createdAt}
+                    subheader={p.createdAt.replace(/T/, '  ').replace(/\..+/, '')}
                   />
                   <iframe
                     title={`frameTitle${i}`}
@@ -215,7 +214,7 @@ class UserSearchedProfile extends Component {
                       aria-expanded={this.state.expanded}
                       aria-label="Show more"
                     >
-                      <ExpandMoreIcon />
+                      <CommentIcon />
                     </IconButton>
                   </CardActions>
                   <Collapse

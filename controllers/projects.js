@@ -43,10 +43,10 @@ async function userProjects(req, res) {
 
 async function likeProject(req, res) {
   Project.findOne({ _id: req.body.projectId }, async function(err, project) {
-    if (project.likes.includes(req.body.userCopy._id)) {
-      project.likes.splice(req.body.userCopy._id, 1);
+    if (project.likes.includes(req.user._id)) {
+      project.likes.splice(req.user._id, 1);
     } else {
-      project.likes.push(req.body.userCopy._id);
+      project.likes.push(req.user._id);
     }
     project.save();
     res.json(project);

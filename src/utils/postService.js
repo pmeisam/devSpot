@@ -50,7 +50,10 @@ function userIndex() {
 function addLike(projectId) {
   const options = {
     method: "POST",
-    headers: new Headers({ "Content-Type": "application/json" }),
+    headers: new Headers({
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + tokenService.getToken()
+    }),
     body: JSON.stringify(projectId)
   };
   return fetch(BASE_URL + "likebtn", options).then(res => res.json());
@@ -59,7 +62,10 @@ function addLike(projectId) {
 function addComment(projectId) {
   const options = {
     method: "POST",
-    headers: new Headers({ "Content-Type": "application/json" }),
+    headers: new Headers({
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + tokenService.getToken()
+    }),
     body: JSON.stringify(projectId)
   };
   return fetch(BASE_URL + "createcomment", options).then(res => res.json());
@@ -68,7 +74,10 @@ function addComment(projectId) {
 function removeComment(project) {
   const options = {
     method: "POST",
-    headers: new Headers({ "Content-Type": "application/json" }),
+    headers: new Headers({
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + tokenService.getToken()
+    }),
     body: JSON.stringify(project)
   };
   return fetch(BASE_URL + "deletecomment", options).then(res => res.json());
@@ -77,7 +86,10 @@ function removeComment(project) {
 function deleteProject(project) {
   const options = {
     method: "POST",
-    headers: new Headers({ "Content-Type": "application/json" }),
+    headers: new Headers({
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + tokenService.getToken()
+    }),
     body: JSON.stringify(project)
   };
   return fetch(BASE_URL + "deleteproject", options).then(res => res.json());
@@ -86,7 +98,10 @@ function deleteProject(project) {
 function updateProject(project) {
   const options = {
     method: "POST",
-    headers: new Headers({ "Content-Type": "application/json" }),
+    headers: new Headers({
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + tokenService.getToken()
+    }),
     body: JSON.stringify(project)
   };
   return fetch(BASE_URL + "updateproject", options).then(res => res.json);

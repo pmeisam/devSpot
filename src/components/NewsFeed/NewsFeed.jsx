@@ -13,10 +13,8 @@ import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import red from "@material-ui/core/colors/red";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+import CommentIcon from '@material-ui/icons/Comment';
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
@@ -41,7 +39,7 @@ const styles = theme => ({
     })
   },
   expandOpen: {
-    transform: "rotate(180deg)"
+    transform: "rotate(2880deg)"
   },
   avatar: {
     backgroundColor: '#379683'
@@ -50,7 +48,7 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     width: "60vw"
-  }
+  }   
 });
 
 class HomePage extends Component {
@@ -104,13 +102,9 @@ class HomePage extends Component {
                     {p.user[0].first_name[0]}
                   </Avatar>
                 }
-                action={
-                  <IconButton>
-                    <MoreVertIcon />
-                  </IconButton>
-                }
+                
                 title={p.user[0].user_name}
-                subheader={p.createdAt}
+                subheader={p.createdAt.replace(/T/, '  ').replace(/\..+/, '')}
               />
               <iframe title={`iframe${i}`} className="frame" src={p.url} />
               <CardContent>
@@ -157,7 +151,7 @@ class HomePage extends Component {
                   aria-expanded={this.state.expanded}
                   aria-label="Show more"
                 >
-                  <ExpandMoreIcon />
+                  <CommentIcon />
                   {/* View all comments */}
                 </IconButton>
               </CardActions>

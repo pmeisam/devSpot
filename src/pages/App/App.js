@@ -167,7 +167,7 @@ class App extends Component {
                       {...props}
                       projects={this.state.projects}
                       user={userService.getUser()}
-                      handleCommentDelete={this.handleCommentDelete}
+                      
                       handleCommentSubmit={this.handleCommentSubmit}
                       handleLikeButton={this.handleLikeButton}
                       users={userService.getAllUsers()}
