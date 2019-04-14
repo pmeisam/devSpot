@@ -2,9 +2,12 @@ const Chat = require("../models/chat");
 const User = require("../models/user");
 
 module.exports = {
-  allChatsIndex,
-  createChat
+  createChat,
+  getAllChats
 };
+async function getAllChats(req, res){
+  Chat.find({}).populate('users').then(chats => res.json(chats));
+}
 
 async function createChat(req, res) {
   const users = req.body;
@@ -38,6 +41,3 @@ async function createChat(req, res) {
   }
 }
 
-function allChatsIndex(req, res) {
-  console.log("Meisam is in the server now just for a freaking chat");
-}

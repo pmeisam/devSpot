@@ -3,9 +3,6 @@ import userService from "../../utils/userService";
 import { Route } from "react-router-dom";
 import postService from "../../utils/postService";
 import EditProject from "../../components/EditProject/EditProject";
-// import DeleteIcon from "@material-ui/icons/Delete";
-// import EditIcon from "@material-ui/icons/Edit";
-// import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import classnames from "classnames";
@@ -63,7 +60,10 @@ class UserSearchedProfile extends Component {
     chatId: null,
     expanded: false,
     comment: '',
+    allMessages: null,
+    chatRoom: null
   };
+  
   handleCommentSubmit = e => {
     e.preventDefault();
     const user = userService.getUser();
@@ -92,15 +92,17 @@ class UserSearchedProfile extends Component {
   handleChange = evt => {
     this.setState({[evt.target.name]: evt.target.value});
   }
+  
 
   async componentDidMount() {
+    
     const users = await this.props.users;
     const queryData = users.filter(u => {
       return u.user_name === this.props.match.params.username;
     });
+    const allMessages = await chatService.getAllChats();
+    this.setState({allMessages})
     this.setState({queryData})
-    // const searchedUser = this.state.queryData[0].chats;
-    // const loggedInUser = await userService.getUser().chats;
     const chat = await chatService.createChat([
       this.state.queryData,
       userService.getUser()
@@ -127,7 +129,6 @@ class UserSearchedProfile extends Component {
                 action={
                   <Link
                     to={`/chat/${this.state.chatId}`}
-                    onClick={this.handleFindChat}
                   >
                     <IconButton>
                       <MailIcon />

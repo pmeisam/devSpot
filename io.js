@@ -35,11 +35,24 @@ function init(http) {
       }
     });
 
+    socket.on('page-clicked', async function({ id, token }){
+      console.log(id)
+      const chat = await Chat.findById(id).populate("users");
+      const user = await validateToken(token);
+      if (!user) return;
+      socket.join(chat._id, function() {
+        io.to(chat._id).emit("page-clicked", chat);
+      });
+    })
+
   });
 }
 
 function getIo() {
   return io;
+}
+function findMessages() {
+  Chat.findById
 }
 
 function validateToken(token) {

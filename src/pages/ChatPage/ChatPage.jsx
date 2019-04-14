@@ -4,6 +4,7 @@ import { Button } from "@material-ui/core";
 import userService from "../../utils/userService";
 import socket from "../../socket";
 import Card from "@material-ui/core/Card";
+import chatService from "../../utils/chatService";
 
 class ChatPage extends Component {
   state = {
@@ -11,8 +12,10 @@ class ChatPage extends Component {
     user: null,
     chatId: null,
     messages: [],
-    userName: null
+    userName: null,
+    chatRoom: null
   };
+
   scrollToBottom = () => {
     this.el.scrollIntoView({ behavior: "smooth" });
   };
@@ -31,7 +34,7 @@ class ChatPage extends Component {
   handleChange = evt => {
     this.setState({ [evt.target.name]: evt.target.value });
   };
-  componentDidMount() {
+  async componentDidMount() {
     this.scrollToBottom();
     socket.registerApp(this);
     if (this.state.chat) {
@@ -41,17 +44,23 @@ class ChatPage extends Component {
     this.setState({ user });
     this.setState({ chatId: this.props.match.params.chatId });
   }
-  componentDidUpdate() {
+  async componentDidUpdate() {
     this.scrollToBottom();
+    const allChats = await chatService.getAllChats();
+    const chatRoom = allChats.filter( ch => {
+      if(ch._id === this.props.match.params.chatId){
+        return ch;
+      }
+    })
+    this.setState({chatRoom});
   }
 
   render() {
-    console.log(this.state.messages);
     return (
       <div style={{ paddingTop: "150px" }}>
         <Card style={{width: '80%', margin: '0 auto', padding: '0 40px'}}>
-          {this.state.messages ? (
-            this.state.messages.map(m => (
+          {this.state.chatRoom ? (
+            this.state.chatRoom[0].messages.map(m => (
               <p style={{margin: '10px 40px'}} key={m._id}>
                 <span style={{fontWeight: '900'}}>{m.userName}:&nbsp;&nbsp;</span>
                 {m.content}
