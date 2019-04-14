@@ -49,7 +49,7 @@ class ChatPage extends Component {
     console.log(this.state.messages);
     return (
       <div style={{ paddingTop: "150px" }}>
-        <Card style={{width: '80%', height: '80vh', margin: '0 auto', padding: '0 40px'}}>
+        <Card style={{width: '80%', margin: '0 auto', padding: '0 40px'}}>
           {this.state.messages ? (
             this.state.messages.map(m => (
               <p style={{margin: '10px 40px'}} key={m._id}>
