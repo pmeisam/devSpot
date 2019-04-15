@@ -57,7 +57,7 @@ class ChatPage extends Component {
 
   render() {
     return (
-      <div style={{ paddingTop: "80px" }}>
+      <div style={{ paddingTop: "80px", display: 'flex', minHeight: '100vh', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'end' }}>
         <Card style={{ width: "80%", margin: "0 auto", padding: "0 40px" }}>
           {this.state.chatRoom ? (
             this.state.chatRoom[0].messages.map(m =>
@@ -101,7 +101,7 @@ class ChatPage extends Component {
         </Card>
         <form
           onSubmit={this.handleSubmit}
-          style={{ bottom: 0, display: "fixed", margin: "0 auto 0 auto", backgroundColor: 'white', width: '80vw' }}
+          style={{ bottom: 0, display: 'fixed', margin: "0 10vw 0 10vw", backgroundColor: 'white', width: '80vw', padding: '10px' }}
         >
           <TextField
             required
