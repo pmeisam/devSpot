@@ -1,9 +1,11 @@
 .PrimarySearchAppBar-root-1 {
   width: 0;
 }
+
 .links {
   color: #5cdb95;
 }
+
 .links:hover {
   color: #8ee4af;
   text-decoration: none;
@@ -14,13 +16,16 @@
   margin-right: 25px;
   color: #5cdb95
 }
+
 p {
     margin-top: 14px;
 }
+
 .navbar {
   background-color: #9575cd;
   display: fixed;
 }
+
 .searchResults {
   padding-top: 100px;
   width: 30vw;
