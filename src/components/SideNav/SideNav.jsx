@@ -6,9 +6,9 @@ import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { withStyles } from "@material-ui/core/styles";
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
 
 const styles = theme => ({
   search: {
@@ -51,12 +51,12 @@ const styles = theme => ({
     }
   },
   root: {
-    width: '100%',
-    maxWidth: 245,
+    width: "100%",
+    maxWidth: 250,
     backgroundColor: theme.palette.background.paper,
-    margin: '0 auto'
-  },
-})
+    margin: "0 auto"
+  }
+});
 
 class SideNav extends Component {
   state = {
@@ -77,7 +77,7 @@ class SideNav extends Component {
     }
 
     this.setState({
-      checked: newChecked,
+      checked: newChecked
     });
   };
   handleSearch = evt => {
@@ -87,7 +87,7 @@ class SideNav extends Component {
     this.setState({ [evt.target.name]: evt.target.value });
     const searchedUser = this.state.user;
     const searchData = this.state.users.filter(u => {
-      if (u.user_name.includes(searchedUser)) {
+      if (u.user_name.toLowerCase().includes(searchedUser.toLowerCase())) {
         return u;
       } else {
         return 0;
@@ -109,19 +109,13 @@ class SideNav extends Component {
     const { classes } = this.props;
     return (
       <aside className="sideNav">
-        {this.state.userLoggedIn ? (
-          <h3>Welcome to devSpot {this.state.userLoggedIn.first_name}</h3>
-        ) : (
-          <p />
-        )}
-
         <form onSubmit={this.handleSubmit}>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
             <InputBase
-              placeholder="Search users by username…"
+              placeholder="Search users..."
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput
@@ -138,36 +132,21 @@ class SideNav extends Component {
             />
           </div>
         </form>
-        
-        {this.state.results ? (
+
+        {this.state.results && this.state.user ? (
           <>
             <List className={classes.root}>
-            {this.state.results.map(value=> (
-              <Link
-              to={`/profile/${value.user_name}`}
-            >
-              <ListItem key={value} role={undefined} dense button>
-              
-              <ListItemText primary={`${value.user_name}`} />
-            </ListItem>
-            </Link>
-            ) )}
-            </List>
-            {/* <ul>
-              {this.state.results.map(u => (
-                <li>
-                  <Link
-                    className="searchResults"
-                    to={`/profile/${u.user_name}`}
-                  >
-                    {u.user_name}
-                  </Link>
-                </li>
+              {this.state.results.map(value => (
+                <Link to={`/profile/${value.user_name}`}>
+                  <ListItem key={value} role={undefined} dense button>
+                    <ListItemText primary={`${value.user_name}`} />
+                  </ListItem>
+                </Link>
               ))}
-            </ul> */}
+            </List>
           </>
         ) : (
-          <p></p>
+          <p />
         )}
       </aside>
     );

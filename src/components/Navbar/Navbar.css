@@ -2,16 +2,17 @@
   width: 0;
 }
 .links {
-  color: white;
+  color: #5cdb95;
 }
 .links:hover {
-  color: lightgray;
+  color: #8ee4af;
   text-decoration: none;
 }
 .logo {
   font-family: "Mrs Sheppards", cursive;
   font-size: 40px;
   margin-right: 25px;
+  color: #5cdb95
 }
 p {
     margin-top: 14px;

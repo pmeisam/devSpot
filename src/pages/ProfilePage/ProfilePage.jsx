@@ -135,7 +135,7 @@ class ProfilePage extends Component {
             subheader={userService.getUser().user_name}
           />
           <CardContent>
-            <Typography paragraph>
+            <Typography style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
               {this.state.user ? (
                 <>
                   <h6>{this.state.user.bio}</h6>

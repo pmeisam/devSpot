@@ -21,7 +21,7 @@ import Button from "@material-ui/core/Button";
 const styles = theme => ({
   card: {
     maxWidth: "90%",
-    margin: "20px 10%",
+    margin: "0 10% 20px 10%",
     backgroundColor: '#5cdb95'
   },
   media: {
@@ -91,7 +91,7 @@ class HomePage extends Component {
     const user = userService.getUser();
     return (
       <>
-        <div style={{ height: "75px" }} />
+        <div style={{ height: "15px" }} />
         {this.props.projects ? (
           this.props.projects.map((p, i) => (
             

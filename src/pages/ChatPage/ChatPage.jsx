@@ -60,7 +60,7 @@ class ChatPage extends Component {
   render() {
     return (
       <div style={{ paddingTop: "80px", display: 'flex', minHeight: '100vh', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'end' }}>
-        <Card style={{ width: "80%", margin: "0 auto", padding: "0 40px" }}>
+        <Card style={{ width: "80%", margin: "0 auto", padding: "0 40px", minHeight: '75vh' }}>
           {this.state.chatRoom ? (
             this.state.chatRoom[0].messages.map(m =>
               m.userName === userService.getUser().user_name ? (

@@ -194,12 +194,14 @@ class PrimarySearchAppBar extends React.Component {
             <p>Upload project</p>
           </MenuItem>
         </Link>
+        <Link className="links" to={`/notifications/${userService.getUser()._id}`}>
         <MenuItem onClick={this.handleMobileMenuClose}>
           <IconButton color="inherit">
             <NotificationsIcon />
           </IconButton>
           <p>Notifications</p>
         </MenuItem>
+        </Link>
         <MenuItem onClick={this.handleProfileMenuOpen}>
           <IconButton color="inherit">
             <AccountCircle />
@@ -208,7 +210,6 @@ class PrimarySearchAppBar extends React.Component {
         </MenuItem>
       </Menu>
     );
-
     return (
       <>
         <div className={classes.root}>
@@ -232,7 +233,6 @@ class PrimarySearchAppBar extends React.Component {
                 noWrap
               >
                 <Link className="links logo" to="/">
-                  {/* <Home /> */}
                   devSpot
                 </Link>
               </Typography>

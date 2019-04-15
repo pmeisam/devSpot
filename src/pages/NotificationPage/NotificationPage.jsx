@@ -39,13 +39,11 @@ class NotificationPage extends React.Component {
               <ListItem key={value.notification} role={undefined} dense button>
                 <ListItemText primary={`${value.notification}`} />
                 <ListItemSecondaryAction>
-                  <IconButton aria-label="Comments">
-                    <Link
-                      to={`/profile/${value.user_name}`}
-                    >
+                  <Link to={`/profile/${value.user_name}`}>
+                    <IconButton aria-label="Comments">
                       <AccountCircle />
-                    </Link>
-                  </IconButton>
+                    </IconButton>
+                  </Link>
                 </ListItemSecondaryAction>
               </ListItem>
             ))
