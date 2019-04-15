@@ -56,7 +56,13 @@ const styles = theme => ({
 });
 
 class ProfilePage extends Component {
-  state = { expanded: false, comment: "", user_name: "", user_id: null };
+  state = {
+    expanded: false,
+    comment: "",
+    user_name: "",
+    user_id: null,
+    user: null
+  };
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
   };
@@ -91,6 +97,8 @@ class ProfilePage extends Component {
   async componentDidMount() {
     const projects = await postService.userIndex();
     this.props.handleUpdateUserProjects(projects);
+    const user = await userService.getUserFromServer();
+    this.setState({ user });
   }
   render() {
     const { classes } = this.props;
@@ -126,6 +134,20 @@ class ProfilePage extends Component {
             }
             subheader={userService.getUser().user_name}
           />
+          <CardContent>
+            <Typography paragraph>
+              {this.state.user ? (
+                <>
+                  <h6>{this.state.user.bio}</h6>
+                  <a _blank href={this.state.user.portfolio}><i class="fas fa-laptop-code icon"></i></a>
+                  <a _blank href={this.state.user.linkedIn}><i class="fab fa-linkedin icon"></i></a>
+                  <a _blank href={this.state.user.gitHub}><i class="fab fa-github-square icon"></i></a>
+                </>
+              ) : (
+                <p />
+              )}
+            </Typography>
+          </CardContent>
         </Card>
         {this.props.userProjects ? (
           this.props.userProjects.projects.map((p, i) => (

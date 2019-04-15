@@ -2,3 +2,8 @@ iframe{
     width: 80vw;
     height: 50vw;
 }
+.icon {
+    font-size: 30px;
+    margin: 0 10px;
+    color: black;
+}

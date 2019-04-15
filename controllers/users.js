@@ -6,8 +6,24 @@ module.exports = {
   signup,
   login,
   getAllUsers,
-  getNotifications
+  getNotifications,
+  updateProfile,
+  getUserFromServer
 };
+async function getUserFromServer(req, res){
+  User.findById({_id: req.user._id}, async function(err, user){
+    await res.json(user)
+  })
+}
+
+async function updateProfile(req, res){
+  User.findOne({_id: req.user._id}, async function(err, user){
+    if(req.body.portfolio) user.portfolio = req.body.portfolio;
+    if(req.body.linkedIn) user.linkedIn = req.body.linkedIn;
+    if(req.body.gitHub) user.gitHub = req.body.gitHub;
+    await user.save();
+  })
+}
 
 async function getNotifications(req, res){
   User.findById({_id: req.user._id}, async function(err, user){

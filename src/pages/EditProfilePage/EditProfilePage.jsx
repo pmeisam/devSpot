@@ -6,7 +6,6 @@ import TextField from "@material-ui/core/TextField";
 
 class SignupForm extends Component {
   state = {
-    user_name: "",
     bio: '',
     gitHub: '',
     linkedIn: '',
@@ -21,6 +20,7 @@ class SignupForm extends Component {
 
   handleSubmit = async e => {
     e.preventDefault();
+    userService.updateProfile(this.state);
     this.props.history.push(`/${userService.getUser().user_name}`);
   };
 
@@ -28,7 +28,7 @@ class SignupForm extends Component {
     return (
       <div className="container">
       <div style={{height: '90px'}}></div>
-        <form
+        <form onSubmit={this.handleSubmit}
           style={{
             display: "flex",
             flexDirection: "column",
@@ -40,18 +40,7 @@ class SignupForm extends Component {
             borderRadius: "15px",
           }}
         >
-          <TextField
-            style={{ width: "50vw" }}
-            label="User Name"
-            margin="normal"
-            variant="outlined"
-            type="text"
-            placeholder="First Name"
-            value={this.state.user_name}
-            name="user_name"
-            onChange={this.handleChange}
-            autoComplete='off'
-          />
+         
           <TextField
             style={{ width: "50vw" }}
             label="Portfolio"
@@ -102,7 +91,7 @@ class SignupForm extends Component {
               size="large"
               variant="outlined"
               color="primary"
-              onClick={this.handleSubmit}
+              type='submit'
             >
               Submit
             </Button>

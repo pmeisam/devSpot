@@ -8,9 +8,10 @@ router.get('/users', usersCtrl.getAllUsers )
 router.post('/signup', usersCtrl.signup);
 router.post('/login', usersCtrl.login);
 /*---------- Protected Routes ----------*/
-router.use(require('../../config/auth'))
-router.get('/notifications', usersCtrl.getNotifications);
-
+router.use(require('../../config/auth'));
+router.get('/user', checkAuth, usersCtrl.getUserFromServer);
+router.get('/notifications', checkAuth, usersCtrl.getNotifications);
+router.post('/updateprofile', checkAuth, usersCtrl.updateProfile);
 
 function checkAuth(req, res, next) {
     // console.log("api req.user: ", req.user);
