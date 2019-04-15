@@ -136,6 +136,38 @@ class UserSearchedProfile extends Component {
                   </Link>
                 }
               />
+                <CardContent>
+            <Typography style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+              {this.state.queryData[0] ? (
+                <>
+                  <h6>{this.state.queryData[0].bio}</h6>
+                  {this.state.queryData[0].portfolio ? (
+                    <a _blank href={this.state.queryData[0].portfolio}>
+                      <i class="fas fa-laptop-code icon" />
+                    </a>
+                  ) : (
+                    <p />
+                  )}
+                  {this.state.queryData[0].linkedIn ? (
+                    <a _blank href={this.state.queryData[0].linkedIn}>
+                      <i class="fab fa-linkedin icon" />
+                    </a>
+                  ) : (
+                    <p />
+                  )}
+                  {this.state.queryData[0].gitHub ? (
+                    <a _blank href={this.state.queryData[0].gitHub}>
+                      <i class="fab fa-github-square icon" />
+                    </a>
+                  ) : (
+                    <p />
+                  )}
+                </>
+              ) : (
+                <p />
+              )}
+            </Typography>
+          </CardContent>
             </Card>
 
             {this.state.queryData[0].projects.map((p, i) => (
