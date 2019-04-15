@@ -18,8 +18,11 @@ const userSchema = new mongoose.Schema(
         ref: "Project"
       }
     ],
+    gitHub: String,
+    linkedIn: String,
+    portfolio: String,
     bio: String,
-    notifications: [String],
+    notifications: [{user_name: String, user_id: String, notification: String}],
     followers: [String],
     following: [String],
     chats: [{

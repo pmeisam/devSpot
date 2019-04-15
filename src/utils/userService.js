@@ -22,8 +22,7 @@ function signup(user) {
 function getAllUsers() {
   const options = {
     method: 'GET',
-    headers: new Headers({'Content-Type': 'application/json'}),
-    // body: JSON.stringify(userName)
+    headers: {Authorization: "Bearer " + tokenService.getToken()}
   }
   return fetch(BASE_URL + 'users', options).then( res=>res.json() )
 }
@@ -50,10 +49,18 @@ function login(creds) {
   .then(({token}) => tokenService.setToken(token));
 }
 
+function getNotifications(){
+  return fetch(BASE_URL + 'notifications', {
+    method: 'GET',
+    headers: {Authorization: "Bearer " + tokenService.getToken()}
+  }).then(res => res.json());
+}
+
 export default {
   signup, 
   getUser,
   logout,
   login,
-  getAllUsers
+  getAllUsers,
+  getNotifications,
 };

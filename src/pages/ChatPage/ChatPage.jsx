@@ -50,6 +50,8 @@ class ChatPage extends Component {
     const chatRoom = allChats.filter(ch => {
       if (ch._id === this.props.match.params.chatId) {
         return ch;
+      } else {
+        return 0;
       }
     });
     this.setState({ chatRoom });

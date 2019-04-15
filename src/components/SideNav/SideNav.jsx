@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { TextField } from "@material-ui/core";
 import "./SideNav.css";
 import userService from "../../utils/userService";
 import { Link } from "react-router-dom";
@@ -9,11 +8,7 @@ import { fade } from "@material-ui/core/styles/colorManipulator";
 import { withStyles } from "@material-ui/core/styles";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
-import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import CommentIcon from '@material-ui/icons/Comment';
 
 const styles = theme => ({
   search: {
@@ -106,7 +101,7 @@ class SideNav extends Component {
     const userLoggedIn = users.filter(u => {
       if (u._id === userService.getUser()._id) {
         return u;
-      }
+      } else return 0;
     });
     this.setState({ userLoggedIn });
   }
@@ -136,7 +131,6 @@ class SideNav extends Component {
               margin="normal"
               variant="outlined"
               label="Search users"
-              placeholder="Search users"
               autoComplete="off"
               type="search"
               value={this.state.user}

@@ -15,7 +15,7 @@ module.exports = {
 async function create(req, res) {
   const project = new Project(req.body);
   try {
-    User.findOne({ _id: project.user },  function(err, user) {
+    User.findOne({ _id: project.user }, function(err, user) {
       user.projects.unshift(project.id);
       user.save();
     });
@@ -47,6 +47,15 @@ async function likeProject(req, res) {
       project.likes.splice(req.user._id, 1);
     } else {
       project.likes.push(req.user._id);
+      User.findOne({ _id: project.user }).then(user => {
+        const notification = {
+          user_name: req.user.user_name,
+          user_id: req.user._id,
+          notification: `${req.user.user_name} liked your project.`
+        }
+        user.notifications.unshift(notification);
+        user.save();
+      });
     }
     project.save();
     res.json(project);
@@ -62,6 +71,19 @@ async function addcommentOnProject(req, res) {
       comment: req.body.comment,
       user_name: req.body.userInfo.user_name,
       user_id: req.body.userInfo._id
+    });
+    User.findOne({ _id: project.user }).then(user => {
+      const notification = {
+        user_name: req.user.user_name,
+        user_id: req.user._id,
+        notification: `${req.user.user_name} commented "${
+          req.body.comment
+        }" on your project.`
+      };
+      user.notifications.unshift(
+        notification
+      );
+      user.save();
     });
     await project.save();
     res.json(project);
@@ -83,13 +105,13 @@ async function deleteComment(req, res) {
 async function deleteProject(req, res) {
   // console.log(req.body);
   Project.findOne({ _id: req.body._id }, function(err, project) {
-    User.findOne({_id: project.user[0]}, function(err, user){
-      const projects = user.projects.filter(p=>{
-        return p != req.body._id
-      })
+    User.findOne({ _id: project.user[0] }, function(err, user) {
+      const projects = user.projects.filter(p => {
+        return p != req.body._id;
+      });
       user.projects = projects;
-      user.save()
-    })
+      user.save();
+    });
     project.remove();
     project.save();
     res.json(project);

@@ -8,9 +8,12 @@ import NavBar from "../../components/Navbar/Navbar";
 import HomePage from "../HomePage/HomePage";
 import ProfilePage from "../ProfilePage/ProfilePage";
 import CreatePostPage from "../CreatePostPage/CreatePostPage";
-import UserSearchedProfile from '../UserSearchedProfile/UserSearchedProfile'
+import NotificationPage from '../NotificationPage/NotificationPage';
+import UserSearchedProfile from '../UserSearchedProfile/UserSearchedProfile';
+import EditProfilePage from '../EditProfilePage/EditProfilePage';
 import userService from "../../utils/userService";
 import postService from "../../utils/postService";
+
 import "./App.css";
 
 class App extends Component {
@@ -31,6 +34,9 @@ class App extends Component {
   };
   handleUpdateUserProjects = userProjects => {
     this.setState({ userProjects });
+  };
+  handleUpdateUser = user => {
+    this.setState({ user });
   };
   handleLikeButton = projectId => {
     let projectsCopy = [...this.state.projects];
@@ -140,7 +146,32 @@ class App extends Component {
                       handleCommentDelete={this.handleCommentDelete}
                     />
                   ) : (
-                    <div />
+                    <Redirect to="/login" />
+                  )
+                }
+              />
+              <Route
+                exact
+                path="/notifications/:userId"
+                render={() =>
+                  userService.getUser() ? (
+                    <NotificationPage />
+                  ) : (
+                    <Redirect to="/login" />
+                  )
+                }
+              />
+              <Route
+                exact
+                path="/editprofile/:userId"
+                render={({history}) =>
+                  userService.getUser() ? (
+                    <EditProfilePage  
+                      history={history}
+                      handleUpdateUser={this.handleUpdateUser}
+                    />
+                  ) : (
+                    <Redirect to="/login" />
                   )
                 }
               />
@@ -207,7 +238,7 @@ class App extends Component {
                       handleUpdateUserProjects={this.handleUpdateUserProjects}
                     />
                   ) : (
-                    <LoginPage />
+                    <Redirect to="/login" />
                   )
                 }
               />

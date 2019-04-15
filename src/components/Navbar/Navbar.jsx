@@ -8,16 +8,14 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { withStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import MailIcon from "@material-ui/icons/Mail";
 import AddIcon from "@material-ui/icons/Add";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
-import { Link } from "react-router-dom";
-import "./Navbar.css";
-import InputBase from "@material-ui/core/InputBase";
-import SearchIcon from "@material-ui/icons/Search";
 import userService from "../../utils/userService";
+// import MailIcon from "@material-ui/icons/Mail";
+import "./Navbar.css";
 
 const styles = theme => ({
   root: {
@@ -143,10 +141,9 @@ class PrimarySearchAppBar extends React.Component {
     const userLoggedIn = users.filter(u => {
       if (u._id === userService.getUser()._id) {
         return u;
-      }
+      } else return 0;
     });
     this.setState({ userLoggedIn });
-    console.log(this.state.users);
   }
   render() {
     const { anchorEl, mobileMoreAnchorEl } = this.state;
@@ -180,12 +177,12 @@ class PrimarySearchAppBar extends React.Component {
         open={isMobileMenuOpen}
         onClose={this.handleMenuClose}
       >
-        <MenuItem onClick={this.handleMobileMenuClose}>
+        {/* <MenuItem onClick={this.handleMobileMenuClose}>
           <IconButton color="inherit">
             <MailIcon />
           </IconButton>
           <p>Messages</p>
-        </MenuItem>
+        </MenuItem> */}
         <Link
           style={{ color: "black", textDecoration: "none" }}
           to="/createpost"
@@ -214,70 +211,71 @@ class PrimarySearchAppBar extends React.Component {
 
     return (
       <>
-      <div className={classes.root}>
-        <AppBar
-          style={{ backgroundColor: "#05386b", position: "fixed" }}
-          position="static"
-        >
-          <Toolbar>
-            <IconButton
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="Open drawer"
-            >
-              {/* <MenuIcon /> */}
-            </IconButton>
-
-            <Typography
-              className={classes.title}
-              variant="h6"
-              color="inherit"
-              noWrap
-            >
-              <Link className="links logo" to="/">
-                {/* <Home /> */}
-                devSpot
-              </Link>
-            </Typography>
-
-            <div className={classes.grow} />
-            <div className={classes.sectionDesktop}>
-              <IconButton color="inherit">
-                <MailIcon />
+        <div className={classes.root}>
+          <AppBar
+            style={{ backgroundColor: "#05386b", position: "fixed" }}
+            position="static"
+          >
+            <Toolbar>
+              <IconButton
+                className={classes.menuButton}
+                color="inherit"
+                aria-label="Open drawer"
+              >
+                {/* <MenuIcon /> */}
               </IconButton>
-              <IconButton color="inherit">
-                <NotificationsIcon />
-              </IconButton>
-              <Link className="links" to="/createpost">
-                <IconButton color="inherit">
-                  <AddIcon />
+
+              <Typography
+                className={classes.title}
+                variant="h6"
+                color="inherit"
+                noWrap
+              >
+                <Link className="links logo" to="/">
+                  {/* <Home /> */}
+                  devSpot
+                </Link>
+              </Typography>
+
+              <div className={classes.grow} />
+              <div className={classes.sectionDesktop}>
+                {/* <IconButton color="inherit">
+                  <MailIcon />
+                </IconButton> */}
+                <Link className="links" to={`/notifications/${userService.getUser()._id}`}>
+                  <IconButton color="inherit">
+                    <NotificationsIcon />
+                  </IconButton>
+                </Link>
+                <Link className="links" to="/createpost">
+                  <IconButton color="inherit">
+                    <AddIcon />
+                  </IconButton>
+                </Link>
+                <IconButton
+                  aria-owns={isMenuOpen ? "material-appbar" : undefined}
+                  aria-haspopup="true"
+                  onClick={this.handleProfileMenuOpen}
+                  color="inherit"
+                >
+                  <AccountCircle />
                 </IconButton>
-              </Link>
-              <IconButton
-                aria-owns={isMenuOpen ? "material-appbar" : undefined}
-                aria-haspopup="true"
-                onClick={this.handleProfileMenuOpen}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-            </div>
-            <div className={classes.sectionMobile}>
-              <IconButton
-                aria-haspopup="true"
-                onClick={this.handleMobileMenuOpen}
-                color="inherit"
-              >
-                <MoreIcon />
-              </IconButton>
-            </div>
-          </Toolbar>
-        </AppBar>
-        
-        {renderMenu}
-        {renderMobileMenu}
-      </div>
-      
+              </div>
+              <div className={classes.sectionMobile}>
+                <IconButton
+                  aria-haspopup="true"
+                  onClick={this.handleMobileMenuOpen}
+                  color="inherit"
+                >
+                  <MoreIcon />
+                </IconButton>
+              </div>
+            </Toolbar>
+          </AppBar>
+
+          {renderMenu}
+          {renderMobileMenu}
+        </div>
       </>
     );
   }

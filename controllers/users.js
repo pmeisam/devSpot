@@ -5,8 +5,16 @@ const SECRET = process.env.SECRET;
 module.exports = {
   signup,
   login,
-  getAllUsers
+  getAllUsers,
+  getNotifications
 };
+
+async function getNotifications(req, res){
+  User.findById({_id: req.user._id}, async function(err, user){
+    await res.json(user.notifications)
+  })
+}
+
 async function getAllUsers(req, res) {
   // var modelQuery = req.body.user ? {userName: new RegExp(req.body.username, 'i')} : {};
   // let sortKey = req.query.sort || 'userName';

@@ -4,6 +4,7 @@ import postService from "../../utils/postService";
 import EditProject from "../../components/EditProject/EditProject";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
+import SettingIcon from "@material-ui/icons/Settings";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import classnames from "classnames";
@@ -19,7 +20,7 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import userService from "../../utils/userService";
-import CommentIcon from '@material-ui/icons/Comment';
+import CommentIcon from "@material-ui/icons/Comment";
 import "./ProfilePage.css";
 
 const styles = theme => ({
@@ -45,7 +46,7 @@ const styles = theme => ({
     transform: "rotate(1440deg)"
   },
   avatar: {
-    backgroundColor: '#379683'
+    backgroundColor: "#379683"
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -59,17 +60,17 @@ class ProfilePage extends Component {
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
   };
-  handleChange = (e) => {
-    this.setState({[e.target.name]: e.target.value});
-  }
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
   handleCommentSubmit = e => {
     e.preventDefault();
     const user = userService.getUser();
-    let userProjectsCopy = {...this.props.userProjects};
-    console.log(userProjectsCopy)
-    console.log(e.target.id)
+    let userProjectsCopy = { ...this.props.userProjects };
+    console.log(userProjectsCopy);
+    console.log(e.target.id);
     let projectCopy = { ...userProjectsCopy.projects[e.target.id] };
-    console.log( projectCopy )
+    console.log(projectCopy);
     if (this.state.comment.length > 0) {
       projectCopy.comments.push({
         comment: this.state.comment,
@@ -94,11 +95,45 @@ class ProfilePage extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center"
+        }}
+      >
         <div style={{ height: "100px" }} />
+        <Card className={classes.card} style={{ backgroundColor: "#5cdb95" }}>
+          <CardHeader
+            avatar={
+              <Avatar aria-label="Recipe" className={classes.avatar}>
+                {userService.getUser().first_name[0]}
+              </Avatar>
+            }
+            action={
+              <>
+                <Link to={`/editprofile/${userService.getUser()._id}`}>
+                  <IconButton>
+                    <SettingIcon />
+                  </IconButton>
+                </Link>
+              </>
+            }
+            title={
+              userService.getUser().first_name +
+              " " +
+              userService.getUser().last_name
+            }
+            subheader={userService.getUser().user_name}
+          />
+        </Card>
         {this.props.userProjects ? (
           this.props.userProjects.projects.map((p, i) => (
-            <Card className={classes.card} key={`card${i}`} style={{backgroundColor: '#5cdb95'}}>
+            <Card
+              className={classes.card}
+              key={`card${i}`}
+              style={{ backgroundColor: "#5cdb95" }}
+            >
               <CardHeader
                 avatar={
                   <Avatar aria-label="Recipe" className={classes.avatar}>
@@ -124,7 +159,7 @@ class ProfilePage extends Component {
                   </>
                 }
                 title={this.props.userProjects.user_name}
-                subheader={p.createdAt.replace(/T/, '  ').replace(/\..+/, '')}
+                subheader={p.createdAt.replace(/T/, "  ").replace(/\..+/, "")}
               />
               <iframe title={`frameTitle${i}`} key={`frame${i}`} src={p.url} />
               <CardContent>
@@ -255,8 +290,7 @@ class ProfilePage extends Component {
             </Card>
           ))
         ) : (
-          <img style={{margin: '0 auto'}} src="./images/loading.gif" alt="" />
-
+          <img style={{ margin: "0 auto" }} src="./images/loading.gif" alt="" />
         )}
       </div>
     );
