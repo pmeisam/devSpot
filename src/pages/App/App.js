@@ -8,6 +8,7 @@ import NavBar from "../../components/Navbar/Navbar";
 import HomePage from "../HomePage/HomePage";
 import ProfilePage from "../ProfilePage/ProfilePage";
 import CreatePostPage from "../CreatePostPage/CreatePostPage";
+import AboutUsPage from "../AboutUsPage/AboutUsPage";
 import NotificationPage from '../NotificationPage/NotificationPage';
 import UserSearchedProfile from '../UserSearchedProfile/UserSearchedProfile';
 import EditProfilePage from '../EditProfilePage/EditProfilePage';
@@ -265,6 +266,15 @@ class App extends Component {
                   <SignupPage
                     history={history}
                     handleSignupOrLogin={this.handleSignupOrLogin}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/aboutus"
+                render={({ history }) => (
+                  <AboutUsPage
+                    history={history}
                   />
                 )}
               />

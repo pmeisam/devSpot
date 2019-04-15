@@ -139,9 +139,27 @@ class ProfilePage extends Component {
               {this.state.user ? (
                 <>
                   <h6>{this.state.user.bio}</h6>
-                  <a _blank href={this.state.user.portfolio}><i class="fas fa-laptop-code icon"></i></a>
-                  <a _blank href={this.state.user.linkedIn}><i class="fab fa-linkedin icon"></i></a>
-                  <a _blank href={this.state.user.gitHub}><i class="fab fa-github-square icon"></i></a>
+                  {this.state.user.portfolio ? (
+                    <a _blank href={this.state.user.portfolio}>
+                      <i class="fas fa-laptop-code icon" />
+                    </a>
+                  ) : (
+                    <p />
+                  )}
+                  {this.state.user.linkedIn ? (
+                    <a _blank href={this.state.user.linkedIn}>
+                      <i class="fab fa-linkedin icon" />
+                    </a>
+                  ) : (
+                    <p />
+                  )}
+                  {this.state.user.gitHub ? (
+                    <a _blank href={this.state.user.gitHub}>
+                      <i class="fab fa-github-square icon" />
+                    </a>
+                  ) : (
+                    <p />
+                  )}
                 </>
               ) : (
                 <p />

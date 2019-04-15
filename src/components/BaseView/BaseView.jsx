@@ -4,14 +4,20 @@ import { withStyles } from "@material-ui/core/styles";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
-import './BaseView.css';
+import "./BaseView.css";
 
 const styles = theme => ({
   root: {
     display: "flex",
     flexWrap: "wrap",
     minWidth: 300,
-    width: "100%"
+    width: "100%",
+    justifyContent: 'space-around',
+    alignItems: 'stretch',
+    // backgroundImage: "url('./images/homepage.png')",
+    // backgroundSize: '100% 50%',
+    // backgroundPosition: 'bottom',
+    // height: '100vh',
   },
   image: {
     position: "relative",
@@ -139,7 +145,8 @@ function ButtonBases(props) {
           </Link>
         </ButtonBase>
       ))}
-      <h1 style={{color: '#8ee4af'}}>devSpot</h1>
+      <h1 style={{ color: "#8ee4af" }}>devSpot</h1>
+      {/* <footer style={{bottom: 0, backgroundColor: '#8ee4af', width: '100%', height: '8vh', textAlign: 'center'}}><p>Ⓒ2019 devSpot. All rights reserved.</p></footer> */}
     </div>
   );
 }

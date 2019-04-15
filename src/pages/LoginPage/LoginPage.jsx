@@ -39,11 +39,11 @@ class LoginPage extends Component {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            backgroundColor: '#5cdb95',
-            width: '70vw',
+            backgroundColor: "#8ee4af",
+            width: "70vw",
             padding: "30px",
-            margin: '0 auto',
-            borderRadius: '15px'
+            margin: "0 auto",
+            borderRadius: "15px"
           }}
         >
           <TextField
@@ -76,13 +76,30 @@ class LoginPage extends Component {
             onChange={this.handleChange}
           />
           <div>
-            <Button onClick={this.handleSubmit} size="large" variant="outlined" color="primary">
+            <Button
+              onClick={this.handleSubmit}
+              size="large"
+              variant="outlined"
+              color="primary"
+            >
               Log In
             </Button>
             &nbsp;&nbsp;&nbsp;
             <Link to="/">Cancel</Link>
           </div>
         </form>
+        <footer
+          style={{
+            backgroundColor: "#8ee4af",
+            color: "#05386b",
+            bottom: 0,
+            position: "absolute",
+            width: "100%",
+            textAlign: "center"
+          }}
+        >
+          <p>Ⓒ2019 devSpot. All rights reserved.</p>
+        </footer>
       </div>
     );
   }
