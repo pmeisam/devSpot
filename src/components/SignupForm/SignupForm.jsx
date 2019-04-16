@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import userService from "../../utils/userService";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import { Z_FIXED } from "zlib";
 
 class SignupForm extends Component {
   state = {
