@@ -8,7 +8,7 @@ function HomeView() {
         devSpot.
       </h2>
       <img
-        style={{ width: "80%", margin: "0 10%" }}
+        style={{ width: "45%" }}
         src="./images/devspot.png"
         alt=""
       />
