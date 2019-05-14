@@ -12,6 +12,7 @@ import AboutUsPage from "../AboutUsPage/AboutUsPage";
 import NotificationPage from '../NotificationPage/NotificationPage';
 import UserSearchedProfile from '../UserSearchedProfile/UserSearchedProfile';
 import EditProfilePage from '../EditProfilePage/EditProfilePage';
+import HomeView from '../../components/HomeView/HomeView';
 import userService from "../../utils/userService";
 import postService from "../../utils/postService";
 
@@ -249,6 +250,7 @@ class App extends Component {
           <div>
             <BaseView />
             <Switch>
+              <Route exact path='/' render={ ()=> <HomeView />} />
               <Route
                 exact
                 path="/login"

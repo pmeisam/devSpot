@@ -33,7 +33,7 @@ class SignupForm extends Component {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            backgroundColor: "#5cdb95",
+            backgroundColor: "white",
             width: "70vw",
             padding: "30px",
             margin: "0 auto",

@@ -46,7 +46,7 @@ const styles = theme => ({
     transform: "rotate(1440deg)"
   },
   avatar: {
-    backgroundColor: "#379683"
+    backgroundColor: "rgb(231, 46,51)"
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -111,7 +111,7 @@ class ProfilePage extends Component {
         }}
       >
         <div style={{ height: "100px" }} />
-        <Card className={classes.card} style={{ backgroundColor: "#5cdb95" }}>
+        <Card className={classes.card}>
           <CardHeader
             avatar={
               <Avatar aria-label="Recipe" className={classes.avatar}>
@@ -172,7 +172,6 @@ class ProfilePage extends Component {
             <Card
               className={classes.card}
               key={`card${i}`}
-              style={{ backgroundColor: "#5cdb95" }}
             >
               <CardHeader
                 avatar={

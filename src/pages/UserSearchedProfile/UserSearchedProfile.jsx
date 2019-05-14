@@ -25,7 +25,6 @@ const styles = theme => ({
   card: {
     maxWidth: "90%",
     margin: "20px 10%",
-    backgroundColor: '#5cdb95'
   },
   media: {
     height: 0,

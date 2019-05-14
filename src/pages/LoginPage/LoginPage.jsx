@@ -39,7 +39,7 @@ class LoginPage extends Component {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            backgroundColor: "#8ee4af",
+            backgroundColor: "rgb(216, 77, 66)",
             width: "70vw",
             padding: "30px",
             margin: "0 auto",
@@ -90,8 +90,8 @@ class LoginPage extends Component {
         </form>
         <footer
           style={{
-            backgroundColor: "#8ee4af",
-            color: "#05386b",
+            backgroundColor: "rgb(216, 77, 66)",
+            color: "white",
             bottom: 0,
             position: "absolute",
             width: "100%",

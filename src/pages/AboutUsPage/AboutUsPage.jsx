@@ -3,7 +3,7 @@ import React from "react";
 function AboutUsPage() {
   return (
     <>
-      <h6 style={{ color: "#8ee4af", padding: "40px" }}>
+      <h4 style={{ color: "rgb(216, 77, 66)", textAlign: 'center', width: '50%', margin: '50px auto' }}>
         devSpot is a social media app for developers. It is a web app where
         developers can share their projects as well as like and comment on
         posted procjets. Developers can create a profile and add relevant links
@@ -12,11 +12,11 @@ function AboutUsPage() {
         meaning users can interact with them as they would if they were to visit
         the project. Lastly, users receive notifications with any activity on
         their posts.
-      </h6>
+      </h4>
       <footer
         style={{
-          backgroundColor: "#8ee4af",
-          color: "#05386b",
+          backgroundColor: "rgb(216, 77, 66)",
+          color: "white",
           bottom: 0,
           position: "absolute",
           width: "100%",

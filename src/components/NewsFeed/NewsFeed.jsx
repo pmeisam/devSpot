@@ -22,7 +22,7 @@ const styles = theme => ({
   card: {
     maxWidth: "90%",
     margin: "0 10% 20px 10%",
-    backgroundColor: '#5cdb95'
+    backgroundColor: 'white'
   },
   media: {
     height: 0,

@@ -145,7 +145,7 @@ function ButtonBases(props) {
           </Link>
         </ButtonBase>
       ))}
-      <h1 style={{ color: "#8ee4af" }}>devSpot</h1>
+      <h1 style={{ color: "rgb(216, 77, 66)" }}>devSpot</h1>
       {/* <footer style={{bottom: 0, backgroundColor: '#8ee4af', width: '100%', height: '8vh', textAlign: 'center'}}><p>Ⓒ2019 devSpot. All rights reserved.</p></footer> */}
     </div>
   );

@@ -34,7 +34,7 @@ const styles = theme => ({
     fontSize: 30
   },
   title: {
-    display: "none",
+    color: 'white',
     [theme.breakpoints.up("sm")]: {
       display: "block"
     }
@@ -214,7 +214,7 @@ class PrimarySearchAppBar extends React.Component {
       <>
         <div className={classes.root}>
           <AppBar
-            style={{ backgroundColor: "#05386b", position: "fixed" }}
+            style={{ backgroundColor: "rgb(234, 53, 58)", position: "fixed" }}
             position="static"
           >
             <Toolbar>
@@ -229,7 +229,7 @@ class PrimarySearchAppBar extends React.Component {
               <Typography
                 className={classes.title}
                 variant="h6"
-                color="inherit"
+                color="white"
                 noWrap
               >
                 <Link className="links logo" to="/">
